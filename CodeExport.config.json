@@ -8,7 +8,9 @@
 		"ReadDataFileCOMMENT": "ReadDataFileCOMMENT.bas",
 		"OrderRecord": "OrderRecord.cls",
 		"Reports": "Reports.bas",
-		"DatabaseCOMMENT": "DatabaseCOMMENT.bas"
+		"DatabaseCOMMENT": "DatabaseCOMMENT.bas",
+		"AddToMaster": "AddToMaster.frm",
+		"UserFormLogic": "UserFormLogic.bas"
 	},
 	"References": [
 		{

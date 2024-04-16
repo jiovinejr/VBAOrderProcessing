@@ -64,11 +64,12 @@ Public Property Get CleanItem() As String
     Set itemLookupRange = Worksheets("Master List").Range("B:C")
     On Error Resume Next
         CleanItem = Application.WorksheetFunction.VLookup(orOrderItem, itemLookupRange, 2, False)
+    If Err.Number <> 0 Then
+        DisplayItemForm orOrderItem
+    End If
+    
     'If there's an error make the clean item the same as the order item
     '*** TODO: make a userform to insert a new rowset to avoid future issues***
-    If Err.Number <> 0 Then
-        CleanItem = orOrderItem
-    End If
 End Property
 
 'Look up item and return the case weight associated with that rowset
@@ -83,9 +84,11 @@ Public Property Get ItemCaseWeight() As Double
     End If
 End Property
 
+
 'Simple toString function to use for debugging
 Public Function toString() As String
     toString = "{" & Quantity & "," & OrderMeasurement & "," & _
                 CleanMeasurement & "," & OrderItem & "," & CleanItem & "," & _
                 ItemCaseWeight & "}"
 End Function
+

@@ -108,14 +108,15 @@ End Sub
 Sub PrintOrder()
 Dim orderArr() As OrderRecord, sortedArr() As OrderRecord, arr() As OrderRecord
 Dim ship As String
-ship = "MV FLORETGRACHT-329085"
-arr = CreateRecordFromDB(ship)
+'ship = "MV FLORETGRACHT-329085"
+'arr = CreateRecordFromDB(ship)
+'arr = CreateRecordFromPaste
 orderArr = CreateRecordFromPaste
-sortedArr = SortOrderRecord(arr)
+'sortedArr = SortOrderRecord(arr)
 'For Each rec In orderArr
 '    Debug.Print rec.toString
 'Next rec
-For Each rec In sortedArr
+For Each rec In orderArr
     Debug.Print rec.toString
 Next rec
 End Sub
