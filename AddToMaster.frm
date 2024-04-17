@@ -13,11 +13,18 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+'Handle form button click
 Private Sub AddBtn_Click()
+
+'Uses abstracted method to add data to Master Sheet
 AddDataFromForm
+
+'Hide the form on click
 AddToMaster.Hide
+
 End Sub
+
+'Takes care of category drop down upon creation
 Private Sub UserForm_Initialize()
 CategoryBox.AddItem "Fruits"
 CategoryBox.AddItem "Vegetables"

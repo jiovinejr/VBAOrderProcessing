@@ -1,16 +1,16 @@
 {
 	"Module Paths": {
-		"Module1": "Module1.bas",
 		"Sheet3": "Sheet3.cls",
 		"UserForm1": "UserForm1.frm",
-		"Module2": "Module2.bas",
-		"Module3": "Module3.bas",
-		"ReadDataFileCOMMENT": "ReadDataFileCOMMENT.bas",
 		"OrderRecord": "OrderRecord.cls",
 		"Reports": "Reports.bas",
-		"DatabaseCOMMENT": "DatabaseCOMMENT.bas",
 		"AddToMaster": "AddToMaster.frm",
-		"UserFormLogic": "UserFormLogic.bas"
+		"OLDModule1": "OLDModule1.bas",
+		"OLDModule2": "OLDModule2.bas",
+		"OLDModule3": "OLDModule3.bas",
+		"ReadDataFile": "ReadDataFile.bas",
+		"Database": "Database.bas",
+		"UserFormLogicCOMMENT": "UserFormLogicCOMMENT.bas"
 	},
 	"References": [
 		{
