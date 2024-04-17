@@ -13,6 +13,20 @@ End With
 
 End Sub
 
+Sub AddDataFromForm()
+Dim orderName As String, newName As String
+Dim category As String, caseWeight As Double
+
+With AddToMaster
+    orderName = .OrderNameBox.Text
+    newName = .NewNameBox.Text
+    category = .CategoryBox.Text
+    caseWeight = CDbl(.CaseWeightBox.Text)
+End With
+
+InsertNewItemToMasterList orderName, newName, category, caseWeight
+End Sub
+
 Sub FormTest()
 DisplayItemForm "TEST ITEM 100LBS"
 End Sub

@@ -12,7 +12,7 @@ Dim targetCell As Range, splitSize As Double
     'clear the previous labels, if there are any
     With Worksheets("Label")
         If .Range("A1").value <> "" Then
-            .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).Row).Clear
+            .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).row).Clear
         End If
     End With
     
@@ -57,7 +57,7 @@ Dim lookUp As Range, ORDER As Range, arr() As Variant, shipName As String
 Dim lastInDaily As Integer, shipRngStart As Integer, numOfRows As Integer, r As Integer
 
 shipName = Worksheets("Label").Range("E1").Text
-lastInDaily = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).Row
+lastInDaily = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).row
 
 Set lookUp = Worksheets("Daily").Range("A1:D" & lastInDaily)
 
@@ -93,7 +93,7 @@ Dim rng As Range, arr() As Variant
     
     'find the last row on the "order" sheet, assign the range with the order to the arr array
     With Worksheets("Check")
-        Set rng = .Range("A4:C" & .Range("C" & .Rows.Count).End(xlUp).Row)
+        Set rng = .Range("A4:C" & .Range("C" & .Rows.Count).End(xlUp).row)
     End With
     arr = rng
     

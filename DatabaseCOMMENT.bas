@@ -20,7 +20,7 @@ If Application.CountIf(db.Range("G:G"), shipName) > 0 Then
 End If
 
 'Find the first empty row
-startRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
+startRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
 
 'Length of the order to help with locating full orders later
 numberOfItems = UBound(arr) + 1
@@ -59,7 +59,7 @@ Dim db As Worksheet, targetRow As Integer
 Set db = Worksheets("ShipDatabase")
 
 'Uses the algorithm to find the lasr row containing data and adds 1 to give the first empty row
-targetRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
+targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
 
 'Write data to destination
 db.Range("A" & targetRow) = shipName
@@ -80,7 +80,7 @@ Set allShipsRange = db.Range("G:G")
 
 'Finds the row number of the first instance of the ship name
 'i.e. Where to start deleting
-startRowOfOrder = allShipsRange.Find(shipName).Row
+startRowOfOrder = allShipsRange.Find(shipName).row
 
 'Establish how many items to delete
 numOfItems = Application.WorksheetFunction.XLookup(shipName, Worksheets("ShipDatabase").Range("A:A"), Worksheets("ShipDatabase").Range("B:B"))
@@ -104,9 +104,28 @@ Set db = Worksheets("ShipDatabase")
 Set allShipsRange = db.Range("A:A")
 
 
-shipRow = allShipsRange.Find(shipName).Row
+shipRow = allShipsRange.Find(shipName).row
 
 allShipsRange.Rows(shipRow).EntireRow.Delete
+
+End Sub
+
+Sub InsertNewItemToMasterList(orderName As String, newName As String, category As String, caseWeight As Double)
+Dim master As Worksheet, targetRow As Integer, targetRange As Range
+
+Set master = Worksheets("Master List")
+
+targetRow = master.Cells(Rows.Count, "B").End(xlUp).row
+
+Set targetRange = master.Range("B" & targetRow & ":E" & targetRow)
+
+With targetRange
+    .Cells(, 1) = orderName
+    .Cells(, 2) = newName
+    .Cells(, 3) = category
+    .Cells(, 4) = caseWeight
+End With
+
 
 End Sub
 

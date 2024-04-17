@@ -66,6 +66,7 @@ Public Property Get CleanItem() As String
         CleanItem = Application.WorksheetFunction.VLookup(orOrderItem, itemLookupRange, 2, False)
     If Err.Number <> 0 Then
         DisplayItemForm orOrderItem
+        CleanItem = Application.WorksheetFunction.VLookup(orOrderItem, itemLookupRange, 2, False)
     End If
     
     'If there's an error make the clean item the same as the order item

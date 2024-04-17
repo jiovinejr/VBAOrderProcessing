@@ -64,7 +64,7 @@ Dim orderRange As Range, lastInOrder As Integer
 Dim shipFromOrderPaste As String, arr() As OrderRecord
 
 'Get last row with data in the item column "C"
-lastInOrder = Worksheets("Order").Cells(Rows.Count, "C").End(xlUp).Row
+lastInOrder = Worksheets("Order").Cells(Rows.Count, "C").End(xlUp).row
 
 'Set the range as order starting at the 4th row and going to last row with data
 Set orderRange = Worksheets("Order").Range("A4:C" & lastInOrder)
@@ -89,7 +89,7 @@ Set allShipsRange = db.Range("G:G")
 
 numOfItems = Application.WorksheetFunction.XLookup(shipName, Worksheets("ShipDatabase").Range("A:A"), Worksheets("ShipDatabase").Range("B:B"))
 
-startRowOfOrder = allShipsRange.Find(shipName).Row
+startRowOfOrder = allShipsRange.Find(shipName).row
 lastRowOfOrder = startRowOfOrder + (numOfItems - 1)
 Set orderRange = db.Range("A" & startRowOfOrder & ":G" & lastRowOfOrder)
 

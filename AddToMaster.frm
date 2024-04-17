@@ -13,15 +13,14 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Sub Prompt_Click()
 
+Private Sub AddBtn_Click()
+AddDataFromForm
+AddToMaster.Hide
 End Sub
-
 Private Sub UserForm_Initialize()
-
 CategoryBox.AddItem "Fruits"
 CategoryBox.AddItem "Vegetables"
-
 End Sub
 
 

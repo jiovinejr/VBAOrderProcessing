@@ -57,9 +57,9 @@ Dim r As Variant
 Dim qty As Double, meas As String, item As String
 
 shipName = Worksheets("Check").Range("B1").value
-lastInCheck = Worksheets("Check").Range("A" & Rows.Count).End(xlUp).Row
+lastInCheck = Worksheets("Check").Range("A" & Rows.Count).End(xlUp).row
 Set checkRng = Worksheets("Check").Range("A4", "C" & lastInCheck)
-lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).Row
+lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).row
 target = lastOnDeck + 1
 Set onDeckRng = Worksheets("On Deck").Range("A2:A" & lastOnDeck)
 
@@ -74,7 +74,7 @@ With onDeckRng
     Next r
 End With
 
-lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).Row
+lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).row
 target = lastOnDeck + 1
 
 If Application.CountIf(shipCheck, shipName) = 0 Then
@@ -105,11 +105,11 @@ Dim shipRng As Range, rngDestination As Range
 
 Set ws = ThisWorkbook.Sheets("On Deck")
 
-Set shipRng = Worksheets("On Deck").Range("F1:F" & Worksheets("On Deck").Range("F" & Rows.Count).End(xlUp).Row)
+Set shipRng = Worksheets("On Deck").Range("F1:F" & Worksheets("On Deck").Range("F" & Rows.Count).End(xlUp).row)
 Set rngDestination = Worksheets("On Deck").Range("F1:F1")
 
 shipRng.Clear
-Worksheets("On Deck").Range("A1:A" & Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).Row).AdvancedFilter Action:=xlFilterCopy, CopyToRange:=rngDestination, Unique:=True
+Worksheets("On Deck").Range("A1:A" & Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).row).AdvancedFilter Action:=xlFilterCopy, CopyToRange:=rngDestination, Unique:=True
 
 shipRng.Sort Key1:=shipRng.Cells(1), Order1:=xlAscending, Header:=xlYes
 ws.AutoFilterMode = False
@@ -171,7 +171,7 @@ End Sub
 Sub LabelsForFullOrder()
 Dim l As Integer, shipName As String
     l = Worksheets("Label") _
-        .Range("C" & Rows.Count).End(xlUp).Row
+        .Range("C" & Rows.Count).End(xlUp).row
         
     shipName = Worksheets("Label").Range("E1").Text
     
@@ -185,7 +185,7 @@ Sub SelectedLabels()
     Dim Selected As Integer, r As Integer, last As Integer
 
     Selected = Selection.Areas(1).Rows.Count
-    r = CInt(Selection.Areas(1).Cells.Row)
+    r = CInt(Selection.Areas(1).Cells.row)
     last = (r + Selected) - 1
     
     PrintBoxLabels r, last
@@ -203,7 +203,7 @@ Sub PrintOrderAndCheck()
     
     shipName = Worksheets("Check").Range("B1")
     
-    lastInOrder = Worksheets("Order").Range("A" & Rows.Count).End(xlUp).Row
+    lastInOrder = Worksheets("Order").Range("A" & Rows.Count).End(xlUp).row
     
     Application.ActivePrinter = "ET-5880 Series(Network) on Ne05:"
     
@@ -233,7 +233,7 @@ Sub MakePDFs()
     'Application.ActivePrinter = "ET-5880 Series(Network) on Ne05:"
     shipName = Worksheets("Check").Range("B1")
     
-    lastInOrder = Worksheets("Order").Range("A" & Rows.Count).End(xlUp).Row
+    lastInOrder = Worksheets("Order").Range("A" & Rows.Count).End(xlUp).row
     
     Set orderRng = Worksheets("Order").Range("A1", "E" & lastInOrder)
     Set checkRng = Worksheets("Check").Range("A1", "D" & lastInOrder)
@@ -279,7 +279,7 @@ Sub MakeCheckSheet()
     ship = Worksheets("Order").Range("C1").value
     
     ' Find the last row in the order sheet
-    lastInOrder = Worksheets("Order").Cells(Rows.Count, "C").End(xlUp).Row
+    lastInOrder = Worksheets("Order").Cells(Rows.Count, "C").End(xlUp).row
     
     ' Set the order range
     Set orderRange = Worksheets("Order").Range("A4:C" & lastInOrder)
@@ -302,20 +302,20 @@ Sub MakeCheckSheet()
         
         ' Write order information to Check sheet
         orderRow.Cells(1, 1).Copy
-        Worksheets("Check").Cells(orderRow.Row, 1).PasteSpecial Paste:=xlPasteValues
+        Worksheets("Check").Cells(orderRow.row, 1).PasteSpecial Paste:=xlPasteValues
         ' Lookup measurement and product information
         On Error Resume Next
-        Worksheets("Check").Cells(orderRow.Row, 2) = Application.WorksheetFunction.VLookup(OrderMeasurement, msrmntLookupRange, 2, False)
+        Worksheets("Check").Cells(orderRow.row, 2) = Application.WorksheetFunction.VLookup(OrderMeasurement, msrmntLookupRange, 2, False)
         If Err.Number <> 0 Then
-            Worksheets("Check").Cells(orderRow.Row, 2) = OrderMeasurement
-            Worksheets("Check").Cells(orderRow.Row, 2).Interior.Color = vbYellow
+            Worksheets("Check").Cells(orderRow.row, 2) = OrderMeasurement
+            Worksheets("Check").Cells(orderRow.row, 2).Interior.Color = vbYellow
             Err.Clear
         End If
         
-        Worksheets("Check").Cells(orderRow.Row, 3) = Application.WorksheetFunction.VLookup(orderProduct, prdctLookupRange, 2, False)
+        Worksheets("Check").Cells(orderRow.row, 3) = Application.WorksheetFunction.VLookup(orderProduct, prdctLookupRange, 2, False)
         If Err.Number <> 0 Then
-            Worksheets("Check").Cells(orderRow.Row, 3) = orderProduct
-            Worksheets("Check").Cells(orderRow.Row, 3).Interior.Color = vbYellow
+            Worksheets("Check").Cells(orderRow.row, 3) = orderProduct
+            Worksheets("Check").Cells(orderRow.row, 3).Interior.Color = vbYellow
             Err.Clear
         End If
         On Error GoTo 0
@@ -351,13 +351,13 @@ Dim rng As Range, arr() As Variant, targetCell As Range, splitSize As Double
     'clear the previous labels, if there are any
     With Worksheets("Label")
         If .Range("A1").value <> "" Then
-            .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).Row).Clear
+            .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).row).Clear
         End If
     End With
     
     'find the last row on the "order" sheet, assign the range with the order to the arr array
     With Worksheets("Check")
-        Set rng = .Range("A4:C" & .Range("C" & .Rows.Count).End(xlUp).Row)
+        Set rng = .Range("A4:C" & .Range("C" & .Rows.Count).End(xlUp).row)
     End With
     arr = rng
     

@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Private Sub ListBox1_Click()
 
 End Sub
@@ -36,7 +37,7 @@ Private Sub UserForm_Initialize()
 Dim rng As Variant
 Dim l As Integer
 
-l = Worksheets("On Deck").Range("F" & Rows.Count).End(xlUp).Row
+l = Worksheets("On Deck").Range("F" & Rows.Count).End(xlUp).row
 Set rng = Worksheets("On Deck").Range("F1:F" & l)
 
 With ListBox1
@@ -53,7 +54,7 @@ ClearFilters
 Dim ck As Integer, i As Integer, target As Integer
 
 ck = 0
-target = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).Row + 1
+target = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).row + 1
 
 For i = 0 To Me.ListBox1.ListCount - 1
     If Me.ListBox1.Selected(i) Then
