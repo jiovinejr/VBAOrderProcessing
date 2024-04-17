@@ -4,13 +4,14 @@
 		"UserForm1": "UserForm1.frm",
 		"OrderRecord": "OrderRecord.cls",
 		"Reports": "Reports.bas",
-		"AddToMaster": "AddToMaster.frm",
 		"OLDModule1": "OLDModule1.bas",
 		"OLDModule2": "OLDModule2.bas",
 		"OLDModule3": "OLDModule3.bas",
 		"ReadDataFile": "ReadDataFile.bas",
 		"Database": "Database.bas",
-		"UserFormLogicCOMMENT": "UserFormLogicCOMMENT.bas"
+		"AddToMasterForm": "AddToMasterForm.frm",
+		"UserFormLogic": "UserFormLogic.bas",
+		"MeasurementForm": "MeasurementForm.frm"
 	},
 	"References": [
 		{

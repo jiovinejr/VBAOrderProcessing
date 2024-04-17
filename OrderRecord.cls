@@ -53,7 +53,8 @@ Public Property Get CleanMeasurement() As String
     'If there's an error make the clean measurement the same as the order measurement
     '*** TODO: make a userform to insert a new rowset to avoid future issues***
     If Err.Number <> 0 Then
-        CleanMeasurement = orOrderMeasurement
+        DisplayMeasurementForm orOrderMeasurement
+        CleanMeasurement = Application.WorksheetFunction.VLookup(orOrderMeasurement, msrmntLookupRange, 2, False)
     End If
 End Property
 

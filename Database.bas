@@ -124,7 +124,7 @@ Dim master As Worksheet, targetRow As Integer, targetRange As Range
 
 'Set where to write data
 Set master = Worksheets("Master List")
-targetRow = master.Cells(Rows.Count, "B").End(xlUp).row
+targetRow = master.Cells(Rows.Count, "B").End(xlUp).row + 1
 Set targetRange = master.Range("B" & targetRow & ":E" & targetRow)
 
 'Write data
@@ -134,9 +134,23 @@ With targetRange
     .Cells(, 3) = category
     .Cells(, 4) = caseWeight
 End With
+End Sub
 
+Sub InsertNewMeasurmentToMasterList(orderMeasurementName As String, newMeasurementName As String)
+
+Dim master As Worksheet, targetRow As Integer, targetRange As Range
+
+Set master = Worksheets("Master List")
+targetRow = master.Cells(Rows.Count, "F").End(xlUp).row + 1
+Set targetRange = master.Range("F" & targetRow & ":G" & targetRow)
+
+With targetRange
+    .Cells(, 1) = orderMeasurementName
+    .Cells(, 2) = newMeasurementName
+End With
 
 End Sub
+
 
 'TEST
 Sub AddDBTest()
