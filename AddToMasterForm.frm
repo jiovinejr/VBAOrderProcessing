@@ -14,14 +14,30 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+
 'Handle form button click
 Private Sub AddBtn_Click()
 
-'Use abstracted method
-AddDataFromForm
+CheckFormInput
 
 'Hide the form on click
 AddToMasterForm.Hide
+
+End Sub
+
+Private Sub CheckFormInput()
+If NewNameBox.Text = "" Or CaseWeightBox.Text = "" Then
+    MsgBox "Fill out all feilds.", vbInformation
+    Exit Sub
+End If
+
+If Not IsNumeric(CaseWeightBox.value) Then
+    MsgBox "Case weight must be a number.", vbInformation
+    Exit Sub
+End If
+
+'Use abstracted method
+Call AddDataFromForm
 
 End Sub
 
