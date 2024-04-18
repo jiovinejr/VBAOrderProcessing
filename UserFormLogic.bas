@@ -27,7 +27,7 @@ Dim orderName As String, newName As String
 Dim category As String, caseWeight As Double
 
 'Set vars with user input
-With AddToMaster
+With AddToMasterForm
     orderName = .OrderNameBox.Text
     newName = .NewNameBox.Text
     category = .CategoryBox.Text
@@ -64,7 +64,12 @@ Dim measurementinput As String, OldItem As String
 'Use input to set variables
 With MeasurementForm
     OldItem = .OldItem.Caption
-    measurementinput = .NewMeasurementBox.Text
+    
+    'Make user input correct format
+    'i.e. Proper Case
+    'e.g. BoXeS = Boxes
+    measurementinput = Application.WorksheetFunction.Proper(.NewMeasurementBox.Text)
+    
 End With
 
 'Use DB method to add new measurement
