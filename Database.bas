@@ -115,19 +115,25 @@ Sub PostShipName(shipName As String, sheetName As String)
 'Initialize
 Dim db As Worksheet, targetRow As Integer, targetCell As Range
 
+'Establish a destination
 Set db = Worksheets(sheetName)
 targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
 Set targetCell = db.Range("A" & targetRow)
 
+'Write the shipName to the destination
 targetCell.value = shipName
 End Sub
+
+'Sends a ship name to Deck
+Sub PostToDeckDB(shipName As String)
+PostShipName shipName, "ShipsOnDeck"
+End Sub
+
+'Sends a ship name to Daily
 Sub PostToDailyDB(shipName As String)
 PostShipName shipName, "DailyDatabase"
 End Sub
 
-Sub PostToDeckDB(shipName As String)
-PostShipName shipName, "ShipsOnDeck"
-End Sub
 
 'Deletes data from the DB by ship name which has an inheirent unique identifier
 Sub DeleteFromOrderDB(shipName As String)
@@ -184,18 +190,20 @@ allShipsRange.Rows(shipRow).EntireRow.Delete
 
 End Sub
 
-Sub DeleteFromDailyDB(shipName As String)
-DeleteSingleShipFromDB shipName, "DailyDatabase"
-End Sub
-
+'Deletes a shipName from On Deck
 Sub DeleteFromDeckDB(shipName As String)
 DeleteSingleShipFromDB shipName, "ShipsOnDeck"
 End Sub
 
+'Deletes a shipName from Daily
+Sub DeleteFromDailyDB(shipName As String)
+DeleteSingleShipFromDB shipName, "DailyDatabase"
+End Sub
+
+'Its a new day clear out
 Sub ClearDailyDB()
 Worksheets("DailyDatabase").Range("A2:F300").ClearContents
 End Sub
-
 
 'TEST
 Sub AddDBTest()

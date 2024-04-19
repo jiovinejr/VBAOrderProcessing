@@ -29,7 +29,7 @@ Dim category As String, caseWeight As Double
 'Set vars with user input
 With AddToMasterForm
     orderName = .OrderNameBox.Text
-    newName = .NewNameBox.Text
+    newName = Application.WorksheetFunction.Proper(.NewNameBox.Text)
     category = .CategoryBox.Text
     caseWeight = CDbl(.CaseWeightBox.Text)
 End With
@@ -77,35 +77,52 @@ PostNewMeasurmentToMasterList OldItem, measurementinput
 
 End Sub
 
+'Form for selecting what ships for today
 Sub DisplayShipSelectForm()
+
+'Initialize
 Dim listRange As Variant
 Dim lastRow As Integer
 
+'Establish the range where the ships on deck are listed
 lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).row
 Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
 
+'Sort the range
 With listRange
     .Sort key1:=.Cells(1, 1), _
               order1:=xlAscending, _
               Header:=xlNo
 End With
 
+'Make the list box draw data from range using location string rather than range method
+'Just a finicky part of VBA
 With ShipSelectForm
     .ShipsOnDeck.RowSource = "ShipsOnDeck!A1:A" & lastRow
 End With
 
+'Show the form
 ShipSelectForm.Show
     
 End Sub
 
+'Method to handle user input upon submittion
 Sub AddShipsToDB()
+
+'Initialize
 Dim i As Integer, shipName As String
 
+'In the form
 With ShipSelectForm
+'Loop through the list box
 For i = 0 To .ShipsOnDeck.ListCount - 1
+    'Helper variable to cast input to String
     shipName = CStr(.ShipsOnDeck.List(i))
+    'When you come across a selected item
     If .ShipsOnDeck.Selected(i) Then
+        'Take it out of the on deck sheet
         DeleteFromDeckDB shipName
+        'Put into the daily sheet
         PostToDailyDB shipName
     End If
 Next i
