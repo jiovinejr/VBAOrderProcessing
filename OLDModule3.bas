@@ -5,23 +5,23 @@ Sub MakeStickers(arr() As Variant, shipName As Variant)
 
 Dim targetCell As Range, splitSize As Double
     
-    'targetCell is where the result will start being written
-    Set targetCell = Worksheets("Label").Range("A1")
-    splitSize = 1
-    
-    'clear the previous labels, if there are any
-    With Worksheets("Label")
-        If .Range("A1").value <> "" Then
-            .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).row).Clear
-        End If
-    End With
-    
-    'Switch to Label sheet
-    Worksheets("Label").Activate
-    
-    Dim Quantity As Double, packaging As String, item As String, rowCounter As Long, caseWeight As Double, i As Integer
-    Dim msgString As String
-    
+'targetCell is where the result will start being written
+Set targetCell = Worksheets("Label").Range("A1")
+splitSize = 1
+
+'clear the previous labels, if there are any
+With Worksheets("Label")
+    If .Range("A1").value <> "" Then
+        .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).row).Clear
+    End If
+End With
+
+'Switch to Label sheet
+Worksheets("Label").Activate
+
+Dim Quantity As Double, packaging As String, item As String, rowCounter As Long, caseWeight As Double, i As Integer
+Dim msgString As String
+
     
 ' Loop through all rows of the order
 For i = 1 To UBound(arr)

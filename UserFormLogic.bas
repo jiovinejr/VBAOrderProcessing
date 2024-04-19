@@ -77,6 +77,28 @@ InsertNewMeasurmentToMasterList OldItem, measurementinput
 
 End Sub
 
+Sub DisplayShipSelectForm()
+
+    ShipSelectForm.Show
+    
+End Sub
+
+Sub AddShipsToDB()
+Dim i As Integer, shipName As String
+
+With ShipSelectForm
+For i = 0 To .ShipsOnDeck.ListCount - 1
+    shipName = CStr(.ShipsOnDeck.List(i))
+    If .ShipsOnDeck.Selected(i) Then
+        DeleteFromDeckDB shipName
+        PostToDailyDB shipName
+    End If
+Next i
+End With
+
+End Sub
+
+
 'TEST
 Sub FormTest()
 DisplayItemForm "TEST ITEM 100LBS"

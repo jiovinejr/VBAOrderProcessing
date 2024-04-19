@@ -111,7 +111,7 @@ Set rngDestination = Worksheets("On Deck").Range("F1:F1")
 shipRng.Clear
 Worksheets("On Deck").Range("A1:A" & Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).row).AdvancedFilter Action:=xlFilterCopy, CopyToRange:=rngDestination, Unique:=True
 
-shipRng.Sort Key1:=shipRng.Cells(1), Order1:=xlAscending, Header:=xlYes
+shipRng.Sort key1:=shipRng.Cells(1), order1:=xlAscending, Header:=xlYes
 ws.AutoFilterMode = False
 
 Worksheets("On Deck").Range("A1:D1").AutoFilter
@@ -340,7 +340,7 @@ End Sub
 
 
 
-Sub Breakdown()
+Sub OldBreakdown()
 
 Dim rng As Range, arr() As Variant, targetCell As Range, splitSize As Double
     

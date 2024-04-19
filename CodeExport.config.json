@@ -1,7 +1,6 @@
 {
 	"Module Paths": {
 		"Sheet3": "Sheet3.cls",
-		"UserForm1": "UserForm1.frm",
 		"OrderRecord": "OrderRecord.cls",
 		"Reports": "Reports.bas",
 		"OLDModule1": "OLDModule1.bas",
@@ -11,7 +10,9 @@
 		"Database": "Database.bas",
 		"AddToMasterForm": "AddToMasterForm.frm",
 		"UserFormLogic": "UserFormLogic.bas",
-		"MeasurementForm": "MeasurementForm.frm"
+		"MeasurementForm": "MeasurementForm.frm",
+		"ShipSelectForm": "ShipSelectForm.frm",
+		"Main": "Main.bas"
 	},
 	"References": [
 		{

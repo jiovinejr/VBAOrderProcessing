@@ -1,10 +1,6 @@
 Attribute VB_Name = "OLDModule2"
 
-Sub DisplayUserForm()
-    
-    UserForm1.Show
-    
-End Sub
+
 
 Sub GetTodaysList()
 
@@ -147,7 +143,7 @@ For Each s In ships
     DeleteDirectory CStr(s)
 Next
 
-Worksheets("Daily").Range("A2:F3000").ClearContents
+Worksheets("DailyDatabase").Range("A2:F3000").ClearContents
 
 
 End Sub

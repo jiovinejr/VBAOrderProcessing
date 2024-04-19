@@ -20,6 +20,7 @@ Set checkRange = checkSheet.Range("A4:C" & UBound(sortedArr))
 checkSheet.Cells.ClearContents
 checkSheet.Range("A1").value = "Name:"
 checkSheet.Range("A2").value = "Date:"
+checkSheet.Range("D3").value = "Notes"
 
 'Set ship name
 checkShipName.value = sortedArr(1).ship
@@ -76,6 +77,11 @@ Next ordRec
 'Hide sheet
 orderSheet.Visible = xlSheetHidden
 
+End Sub
+
+Sub CreateBothReports(arr() As OrderRecord)
+CreateCheckSheet arr
+CreateOrderSheet arr
 End Sub
 
 'Sub to check subs in this Mod

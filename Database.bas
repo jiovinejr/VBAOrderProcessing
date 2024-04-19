@@ -65,6 +65,8 @@ targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
 db.Range("A" & targetRow) = shipName
 db.Range("B" & targetRow) = lineItemCount
 
+PostToDeckDB shipName
+
 End Sub
 
 'Deletes data from the DB by ship name which has an inheirent unique identifier
@@ -99,21 +101,8 @@ End Sub
 'Used in conjunction with DeleteFromOrderDB
 'Deletes helper record in ShipDB
 Sub DeleteFromShipDB(shipName As String)
-
-'Initialize
-Dim db As Worksheet, allShipsRange As Range
-Dim shipRow As Integer
-
-'Establish search area
-Set db = Worksheets("ShipDatabase")
-Set allShipsRange = db.Range("A:A")
-
-'Find shipname
-shipRow = allShipsRange.Find(shipName).row
-
-'Delete row from DB
-allShipsRange.Rows(shipRow).EntireRow.Delete
-
+DeleteSingleShipFromDB shipName, "ShipDatabase"
+DeleteFromDeckDB shipName
 End Sub
 
 'Used by userform to add item to Master List
@@ -136,19 +125,68 @@ With targetRange
 End With
 End Sub
 
+'Used by new measurement form
 Sub InsertNewMeasurmentToMasterList(orderMeasurementName As String, newMeasurementName As String)
 
+'Initialize
 Dim master As Worksheet, targetRow As Integer, targetRange As Range
 
+'Set writing destination
 Set master = Worksheets("Master List")
 targetRow = master.Cells(Rows.Count, "F").End(xlUp).row + 1
 Set targetRange = master.Range("F" & targetRow & ":G" & targetRow)
 
+'Write
 With targetRange
     .Cells(, 1) = orderMeasurementName
     .Cells(, 2) = newMeasurementName
 End With
 
+End Sub
+Sub PostShipName(shipName As String, sheetName As String)
+Dim db As Worksheet, targetRow As Integer, targetCell As Range
+
+Set db = Worksheets(sheetName)
+targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
+Set targetCell = db.Range("A" & targetRow)
+
+targetCell.value = shipName
+End Sub
+Sub PostToDailyDB(shipName As String)
+PostShipName shipName, "DailyDatabase"
+End Sub
+
+Sub PostToDeckDB(shipName As String)
+PostShipName shipName, "ShipsOnDeck"
+End Sub
+
+Sub DeleteSingleShipFromDB(shipName As String, sheetName As String)
+
+'Initialize
+Dim db As Worksheet, allShipsRange As Range
+Dim shipRow As Integer
+
+'Establish search area
+Set db = Worksheets(sheetName)
+Set allShipsRange = db.Range("A:A")
+
+'Find shipname
+shipRow = allShipsRange.Find(shipName).row
+
+'Delete row from DB
+allShipsRange.Rows(shipRow).EntireRow.Delete
+
+End Sub
+
+Sub DeleteFromDailyDB(shipName As String)
+DeleteSingleShipFromDB shipName, "DailyDatabase"
+End Sub
+Sub DeleteFromDeckDB(shipName As String)
+DeleteSingleShipFromDB shipName, "ShipsOnDeck"
+End Sub
+
+Sub ClearDailyDB()
+Worksheets("DailyDatabase").Range("A2:F300").ClearContents
 End Sub
 
 
