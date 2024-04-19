@@ -65,8 +65,68 @@ targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
 db.Range("A" & targetRow) = shipName
 db.Range("B" & targetRow) = lineItemCount
 
+'Adds new ship to On Deck sheet
 PostToDeckDB shipName
 
+End Sub
+
+'Used by userform to add item to Master List
+Sub PostNewItemToMasterList(orderName As String, newName As String, category As String, caseWeight As Double)
+
+'Initialize
+Dim master As Worksheet, targetRow As Integer, targetRange As Range
+
+'Set where to write data
+Set master = Worksheets("Master List")
+targetRow = master.Cells(Rows.Count, "B").End(xlUp).row + 1
+Set targetRange = master.Range("B" & targetRow & ":E" & targetRow)
+
+'Write data
+With targetRange
+    .Cells(, 1) = orderName
+    .Cells(, 2) = newName
+    .Cells(, 3) = category
+    .Cells(, 4) = caseWeight
+End With
+End Sub
+
+'Used by new measurement form
+Sub PostNewMeasurmentToMasterList(orderMeasurementName As String, newMeasurementName As String)
+
+'Initialize
+Dim master As Worksheet, targetRow As Integer, targetRange As Range
+
+'Set writing destination
+Set master = Worksheets("Master List")
+targetRow = master.Cells(Rows.Count, "F").End(xlUp).row + 1
+Set targetRange = master.Range("F" & targetRow & ":G" & targetRow)
+
+'Write
+With targetRange
+    .Cells(, 1) = orderMeasurementName
+    .Cells(, 2) = newMeasurementName
+End With
+
+End Sub
+
+'Master function for adding a single ship to a sheet
+Sub PostShipName(shipName As String, sheetName As String)
+
+'Initialize
+Dim db As Worksheet, targetRow As Integer, targetCell As Range
+
+Set db = Worksheets(sheetName)
+targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
+Set targetCell = db.Range("A" & targetRow)
+
+targetCell.value = shipName
+End Sub
+Sub PostToDailyDB(shipName As String)
+PostShipName shipName, "DailyDatabase"
+End Sub
+
+Sub PostToDeckDB(shipName As String)
+PostShipName shipName, "ShipsOnDeck"
 End Sub
 
 'Deletes data from the DB by ship name which has an inheirent unique identifier
@@ -105,61 +165,7 @@ DeleteSingleShipFromDB shipName, "ShipDatabase"
 DeleteFromDeckDB shipName
 End Sub
 
-'Used by userform to add item to Master List
-Sub InsertNewItemToMasterList(orderName As String, newName As String, category As String, caseWeight As Double)
-
-'Initialize
-Dim master As Worksheet, targetRow As Integer, targetRange As Range
-
-'Set where to write data
-Set master = Worksheets("Master List")
-targetRow = master.Cells(Rows.Count, "B").End(xlUp).row + 1
-Set targetRange = master.Range("B" & targetRow & ":E" & targetRow)
-
-'Write data
-With targetRange
-    .Cells(, 1) = orderName
-    .Cells(, 2) = newName
-    .Cells(, 3) = category
-    .Cells(, 4) = caseWeight
-End With
-End Sub
-
-'Used by new measurement form
-Sub InsertNewMeasurmentToMasterList(orderMeasurementName As String, newMeasurementName As String)
-
-'Initialize
-Dim master As Worksheet, targetRow As Integer, targetRange As Range
-
-'Set writing destination
-Set master = Worksheets("Master List")
-targetRow = master.Cells(Rows.Count, "F").End(xlUp).row + 1
-Set targetRange = master.Range("F" & targetRow & ":G" & targetRow)
-
-'Write
-With targetRange
-    .Cells(, 1) = orderMeasurementName
-    .Cells(, 2) = newMeasurementName
-End With
-
-End Sub
-Sub PostShipName(shipName As String, sheetName As String)
-Dim db As Worksheet, targetRow As Integer, targetCell As Range
-
-Set db = Worksheets(sheetName)
-targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
-Set targetCell = db.Range("A" & targetRow)
-
-targetCell.value = shipName
-End Sub
-Sub PostToDailyDB(shipName As String)
-PostShipName shipName, "DailyDatabase"
-End Sub
-
-Sub PostToDeckDB(shipName As String)
-PostShipName shipName, "ShipsOnDeck"
-End Sub
-
+'Master function for deleting a single ship from a sheet
 Sub DeleteSingleShipFromDB(shipName As String, sheetName As String)
 
 'Initialize
@@ -181,6 +187,7 @@ End Sub
 Sub DeleteFromDailyDB(shipName As String)
 DeleteSingleShipFromDB shipName, "DailyDatabase"
 End Sub
+
 Sub DeleteFromDeckDB(shipName As String)
 DeleteSingleShipFromDB shipName, "ShipsOnDeck"
 End Sub

@@ -35,7 +35,7 @@ With AddToMasterForm
 End With
 
 'Use DB method to add data
-InsertNewItemToMasterList orderName, newName, category, caseWeight
+PostNewItemToMasterList orderName, newName, category, caseWeight
 
 End Sub
 
@@ -73,7 +73,7 @@ With MeasurementForm
 End With
 
 'Use DB method to add new measurement
-InsertNewMeasurmentToMasterList OldItem, measurementinput
+PostNewMeasurmentToMasterList OldItem, measurementinput
 
 End Sub
 
