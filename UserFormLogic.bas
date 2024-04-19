@@ -78,8 +78,23 @@ InsertNewMeasurmentToMasterList OldItem, measurementinput
 End Sub
 
 Sub DisplayShipSelectForm()
+Dim listRange As Variant
+Dim lastRow As Integer
 
-    ShipSelectForm.Show
+lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).row
+Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
+
+With listRange
+    .Sort key1:=.Cells(1, 1), _
+              order1:=xlAscending, _
+              Header:=xlNo
+End With
+
+With ShipSelectForm
+    .ShipsOnDeck.RowSource = "ShipsOnDeck!A1:A" & lastRow
+End With
+
+ShipSelectForm.Show
     
 End Sub
 

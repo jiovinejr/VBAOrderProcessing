@@ -13,6 +13,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Private Sub Ok_Click()
 
 Dim answer As Integer
@@ -27,8 +28,6 @@ Else
 End If
 
 ShipSelectForm.Hide
-Unload Me
-UserForm_Initialize
 
 End Sub
 
@@ -37,23 +36,7 @@ Ok.Enabled = True
 End Sub
 
 Private Sub UserForm_Initialize()
-Dim listRange As Variant
-Dim lastRow As Integer
-
 Ok.Enabled = False
-
-lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).row
-Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
-
-With listRange
-    .Sort key1:=.Cells(1, 1), _
-              order1:=xlAscending, _
-              Header:=xlYes
-End With
-
-With ShipsOnDeck
-    .List = listRange.value
-End With
 End Sub
 
 
