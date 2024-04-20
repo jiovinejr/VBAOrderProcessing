@@ -85,15 +85,9 @@ Dim listRange As Variant
 Dim lastRow As Integer
 
 'Establish the range where the ships on deck are listed
-lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).row
-Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
+lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).Row
 
-'Sort the range
-With listRange
-    .Sort key1:=.Cells(1, 1), _
-              order1:=xlAscending, _
-              Header:=xlNo
-End With
+SortRange
 
 'Make the list box draw data from range using location string rather than range method
 'Just a finicky part of VBA
@@ -104,6 +98,24 @@ End With
 'Show the form
 ShipSelectForm.Show
     
+End Sub
+
+Sub SortRange()
+
+'Initialize
+Dim listRange As Variant
+Dim lastRow As Integer
+
+'Establish the range where the ships on deck are listed
+lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).Row
+Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
+
+'Sort the range
+With listRange
+    .Sort key1:=.Cells(1, 1), _
+              order1:=xlAscending, _
+              Header:=xlNo
+End With
 End Sub
 
 'Method to handle user input upon submittion
@@ -129,7 +141,6 @@ Next i
 End With
 
 End Sub
-
 
 'TEST
 Sub FormTest()

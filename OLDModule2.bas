@@ -9,10 +9,10 @@ Dim shipsForToday As Range, onDeckRng As Range
 Dim r As Variant
 Dim shipName As String, qty As Double, meas As String, item As String
 
-lastTodayListItem = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).row
-lastWeekItem = Worksheets("Week").Range("A" & Rows.Count).End(xlUp).row
-lastShipForToday = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).row
-lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).row
+lastTodayListItem = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).Row
+lastWeekItem = Worksheets("Week").Range("A" & Rows.Count).End(xlUp).Row
+lastShipForToday = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).Row
+lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).Row
 
 Set shipsForToday = Worksheets("Daily").Range("F2:F" & lastShipForToday)
 Set onDeckRng = Worksheets("On Deck").Range("A2:A" & lastOnDeck)
@@ -59,10 +59,10 @@ Dim shipsForToday As Range, onDeckRng As Range, dailyRange As Range
 Dim r As Variant
 Dim shipName As String, qty As Double, meas As String, item As String
 
-lastTodayListItem = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).row
-lastWeekItem = Worksheets("Week").Range("A" & Rows.Count).End(xlUp).row
-lastShipForToday = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).row
-lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).row
+lastTodayListItem = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).Row
+lastWeekItem = Worksheets("Week").Range("A" & Rows.Count).End(xlUp).Row
+lastShipForToday = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).Row
+lastOnDeck = Worksheets("On Deck").Range("A" & Rows.Count).End(xlUp).Row
 
 Set shipsForToday = Worksheets("Daily").Range("F2:F" & lastShipForToday)
 Set onDeckRng = Worksheets("On Deck").Range("A2:A" & lastOnDeck)
@@ -113,7 +113,7 @@ End Sub
 
 Sub PrintPivot()
 Dim printRng As Range
-    last = Worksheets("Needs").Range("A" & Rows.Count).End(xlUp).row
+    last = Worksheets("Needs").Range("A" & Rows.Count).End(xlUp).Row
     
     Set printRng = Worksheets("Needs").Range("A1:G" & last)
     
@@ -131,8 +131,8 @@ Sub ClearDaily()
 Dim lastToday As Integer, lastShip As Integer, ships As Range, arr() As Variant, s As Variant
 Dim ship As String, path As String
 
-lastToday = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).row
-lastShip = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).row
+lastToday = Worksheets("Daily").Range("A" & Rows.Count).End(xlUp).Row
+lastShip = Worksheets("Daily").Range("F" & Rows.Count).End(xlUp).Row
 path = "C:\Users\vince\OneDrive\Desktop\Delaware Ship\OrderPDFs\"
 
 Set ships = Worksheets("Daily").Range("F2:F" & lastShip)

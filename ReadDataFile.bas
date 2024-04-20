@@ -64,7 +64,7 @@ Dim orderRange As Range, lastInOrder As Integer
 Dim shipFromOrderPaste As String, arr() As OrderRecord
 
 'Get last row with data in the item column "C"
-lastInOrder = Worksheets("Order").Cells(Rows.Count, "C").End(xlUp).row
+lastInOrder = Worksheets("Order").Cells(Rows.Count, "C").End(xlUp).Row
 
 'Set the range as order starting at the 4th row and going to last row with data
 Set orderRange = Worksheets("Order").Range("A4:C" & lastInOrder)
@@ -90,14 +90,14 @@ Dim lastRowOfOrder As Integer
 
 'Set sheet and search range variables
 Set db = Worksheets("OrderDatabase")
-Set allShipsRange = db.Range("G:G")
+Set allShipsRange = db.Range("G1:G" & db.Range("G" & Rows.Count).End(xlUp).Row)
 
 'Retrieve the number of items
 numOfItems = Application.WorksheetFunction.XLookup(shipName, Worksheets("ShipDatabase").Range("A:A"), Worksheets("ShipDatabase").Range("B:B"))
 
 'Use the number of items and result of the row search for the first instance
 'Of the ship name to establish perameters for where to pull the order from
-startRowOfOrder = allShipsRange.Find(shipName).row
+startRowOfOrder = allShipsRange.Find(shipName).Row
 lastRowOfOrder = startRowOfOrder + (numOfItems - 1)
 Set orderRange = db.Range("A" & startRowOfOrder & ":G" & lastRowOfOrder)
 
@@ -120,15 +120,15 @@ End Sub
 Sub PrintOrder()
 Dim orderArr() As OrderRecord, sortedArr() As OrderRecord, arr() As OrderRecord
 Dim ship As String
-'ship = "MV FLORETGRACHT-329085"
-'arr = CreateRecordFromDB(ship)
+ship = MV GRANDE HALIFAX-329177"
+arr = CreateRecordFromDB(ship)
 'arr = CreateRecordFromPaste
-orderArr = CreateRecordFromPaste
+'orderArr = CreateRecordFromPaste
 'sortedArr = SortOrderRecord(arr)
 'For Each rec In orderArr
 '    Debug.Print rec.toString
 'Next rec
-For Each rec In orderArr
+For Each rec In arr
     Debug.Print rec.toString
 Next rec
 End Sub

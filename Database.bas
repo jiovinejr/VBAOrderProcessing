@@ -1,6 +1,7 @@
 Attribute VB_Name = "Database"
 'Database Functionality
 
+
 'Insert an order to be saved into the database
 Sub PostToOrderDB(arr() As OrderRecord)
 
@@ -20,7 +21,7 @@ If Application.CountIf(db.Range("G:G"), shipName) > 0 Then
 End If
 
 'Find the first empty row
-startRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
+startRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
 
 'Length of the order to help with locating full orders later
 numberOfItems = UBound(arr) + 1
@@ -59,7 +60,7 @@ Dim db As Worksheet, targetRow As Integer
 Set db = Worksheets("ShipDatabase")
 
 'Uses the algorithm to find the lasr row containing data and adds 1 to give the first empty row
-targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
+targetRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
 
 'Write data to destination
 db.Range("A" & targetRow) = shipName
@@ -78,7 +79,7 @@ Dim master As Worksheet, targetRow As Integer, targetRange As Range
 
 'Set where to write data
 Set master = Worksheets("Master List")
-targetRow = master.Cells(Rows.Count, "B").End(xlUp).row + 1
+targetRow = master.Cells(Rows.Count, "B").End(xlUp).Row + 1
 Set targetRange = master.Range("B" & targetRow & ":E" & targetRow)
 
 'Write data
@@ -98,7 +99,7 @@ Dim master As Worksheet, targetRow As Integer, targetRange As Range
 
 'Set writing destination
 Set master = Worksheets("Master List")
-targetRow = master.Cells(Rows.Count, "F").End(xlUp).row + 1
+targetRow = master.Cells(Rows.Count, "F").End(xlUp).Row + 1
 Set targetRange = master.Range("F" & targetRow & ":G" & targetRow)
 
 'Write
@@ -117,7 +118,7 @@ Dim db As Worksheet, targetRow As Integer, targetCell As Range
 
 'Establish a destination
 Set db = Worksheets(sheetName)
-targetRow = db.Range("A" & Rows.Count).End(xlUp).row + 1
+targetRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
 Set targetCell = db.Range("A" & targetRow)
 
 'Write the shipName to the destination
@@ -132,6 +133,7 @@ End Sub
 'Sends a ship name to Daily
 Sub PostToDailyDB(shipName As String)
 PostShipName shipName, "DailyDatabase"
+SortRange
 End Sub
 
 
@@ -148,7 +150,7 @@ Set allShipsRange = db.Range("G:G")
 
 'Finds the row number of the first instance of the ship name
 'i.e. Where to start deleting
-startRowOfOrder = allShipsRange.Find(shipName).row
+startRowOfOrder = allShipsRange.Find(shipName).Row
 
 'Establish how many items to delete
 numOfItems = Application.WorksheetFunction.XLookup(shipName, Worksheets("ShipDatabase").Range("A:A"), Worksheets("ShipDatabase").Range("B:B"))
@@ -183,7 +185,7 @@ Set db = Worksheets(sheetName)
 Set allShipsRange = db.Range("A:A")
 
 'Find shipname
-shipRow = allShipsRange.Find(shipName).row
+shipRow = allShipsRange.Find(shipName).Row
 
 'Delete row from DB
 allShipsRange.Rows(shipRow).EntireRow.Delete

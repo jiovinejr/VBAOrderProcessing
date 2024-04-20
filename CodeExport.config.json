@@ -12,7 +12,9 @@
 		"UserFormLogic": "UserFormLogic.bas",
 		"MeasurementForm": "MeasurementForm.frm",
 		"ShipSelectForm": "ShipSelectForm.frm",
-		"Main": "Main.bas"
+		"Main": "Main.bas",
+		"Sheet16": "Sheet16.cls",
+		"Breakdown": "Breakdown.bas"
 	},
 	"References": [
 		{
