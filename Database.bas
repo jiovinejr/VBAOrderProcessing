@@ -16,7 +16,7 @@ Set db = Worksheets("OrderDatabase")
 'Checks DB for the ship name which includes a unique identifier inheirently
 'If it find an occurance of the ship name it deletes all line items associated
 'Just in case the re-entering has additions or subtractions
-If Application.CountIf(db.Range("G:G"), shipName) > 0 Then
+If Application.WorksheetFunction.CountIf(db.Range("G:G"), shipName) > 0 Then
     DeleteFromOrderDB shipName
 End If
 
@@ -114,15 +114,19 @@ End Sub
 Sub PostShipName(shipName As String, sheetName As String)
 
 'Initialize
-Dim db As Worksheet, targetRow As Integer, targetCell As Range
+Dim db As Worksheet, offsetAmount As Integer, targetCell As Range
 
 'Establish a destination
 Set db = Worksheets(sheetName)
-targetRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
-Set targetCell = db.Range("A" & targetRow)
+offsetAmount = db.Range("A" & Rows.Count).End(xlUp).Row
+Set targetCell = db.Range("A1")
+
+If targetCell.Text = "" Then
+    offsetAmount = 0
+End If
 
 'Write the shipName to the destination
-targetCell.value = shipName
+targetCell.Offset(offsetAmount, 0).value = shipName
 End Sub
 
 'Sends a ship name to Deck
@@ -133,7 +137,7 @@ End Sub
 'Sends a ship name to Daily
 Sub PostToDailyDB(shipName As String)
 PostShipName shipName, "DailyDatabase"
-SortRange
+'SortRange
 End Sub
 
 
@@ -162,7 +166,7 @@ For i = 1 To numOfItems
 Next
 
 'Also when that's done, delete from the ship DB
-DeleteFromShipDB shipName
+'DeleteFromShipDB shipName
 
 End Sub
 
@@ -204,8 +208,45 @@ End Sub
 
 'Its a new day clear out
 Sub ClearDailyDB()
-Worksheets("DailyDatabase").Range("A2:F300").ClearContents
+Dim db As Worksheet, allShipsRange As Range
+Dim i As Integer, lastShip As Integer
+
+Set db = Worksheets("DailyDatabase")
+lastShip = db.Range("A" & Rows.Count).End(xlUp).Row
+Set allShipsRange = db.Range("A1:A" & lastShip)
+
+For Each ship In allShipsRange
+    DeleteFromOrderDB CStr(ship)
+Next ship
+
+allShipsRange.ClearContents
+
 End Sub
+
+Public Function GetShipsFromDB(sheetName As String) As Variant
+
+'Initialize
+Dim db As Worksheet, allShipsRange As Range, lastRow As Integer
+Dim arr() As Variant
+
+'Establish search area
+Set db = Worksheets(sheetName)
+lastRow = db.Range("A" & Rows.Count).End(xlUp).Row
+Set allShipsRange = db.Range("A1:A" & lastRow)
+
+GetShipsFromDB = allShipsRange.value
+
+
+End Function
+
+Sub GetDBTest()
+Dim ships As Variant, ship As Variant
+ships = GetShipsFromDB("ShipsOnDeck")
+For Each ship In ships
+    Debug.Print CStr(ship)
+Next ship
+End Sub
+
 
 'TEST
 Sub AddDBTest()

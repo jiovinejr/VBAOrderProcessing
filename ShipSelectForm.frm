@@ -14,10 +14,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
-
-
-
-
 Private Sub Ok_Click()
 
 Dim answer As Integer

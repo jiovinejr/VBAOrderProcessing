@@ -5,7 +5,7 @@ Sub MakeStickers(arr() As OrderRecord, shipName As Variant)
 Dim targetCell As Range, splitSize As Double
     
 'TargetCell is where the result will start being written
-Set targetCell = Worksheets("Home").ListBox1
+Set targetCell = Worksheets("Home").Range("A1")
 splitSize = 1
 
 'Clear the previous labels, if there are any

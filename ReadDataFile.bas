@@ -120,7 +120,7 @@ End Sub
 Sub PrintOrder()
 Dim orderArr() As OrderRecord, sortedArr() As OrderRecord, arr() As OrderRecord
 Dim ship As String
-ship = MV GRANDE HALIFAX-329177"
+'ship = MV GRANDE HALIFAX-329177"
 arr = CreateRecordFromDB(ship)
 'arr = CreateRecordFromPaste
 'orderArr = CreateRecordFromPaste
