@@ -92,7 +92,7 @@ SortRange
 'Make the list box draw data from range using location string rather than range method
 'Just a finicky part of VBA
 With ShipSelectForm
-    .ShipsOnDeck.List = GetShipsFromDB("ShipsOnDeck")
+    .ShipsOnDeck.RowSource = "ShipsOnDeck!A1:A" & lastRow
 End With
 
 'Show the form
