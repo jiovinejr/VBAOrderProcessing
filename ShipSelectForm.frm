@@ -15,8 +15,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 
-
-
 Private Sub Ok_Click()
 
 Dim answer As Integer
@@ -29,18 +27,17 @@ If answer = vbYes Then
 Else
     AddShipsToDB
 End If
-
+WriteLists
+CreateNeedsSheet
 ShipSelectForm.Hide
 
 End Sub
 
-Private Sub ShipsOnDeck_Change()
+Private Sub ShipsOnDeckBox_Change()
 Ok.Enabled = True
 End Sub
 
 Private Sub UserForm_Initialize()
 Ok.Enabled = False
 End Sub
-
-
 

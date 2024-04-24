@@ -323,7 +323,7 @@ Sub MakeCheckSheet()
     
     ' Sort the Check sheet by the third column
     Worksheets("Check").Sort.SortFields.Clear
-    Worksheets("Check").Sort.SortFields.Add Key:=Worksheets("Check").Range("C4:C" & lastInOrder), SortOn:=xlSortOnValues, ORDER:=xlAscending, DataOption:=xlSortNormal
+    Worksheets("Check").Sort.SortFields.Add key:=Worksheets("Check").Range("C4:C" & lastInOrder), SortOn:=xlSortOnValues, ORDER:=xlAscending, DataOption:=xlSortNormal
     With Worksheets("Check").Sort
         .SetRange Worksheets("Check").Range("A4:C" & lastInOrder)
         .Header = xlNo

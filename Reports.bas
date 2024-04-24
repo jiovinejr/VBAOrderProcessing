@@ -83,7 +83,48 @@ Sub CreateBothReports(arr() As OrderRecord)
 CreateCheckSheet arr
 CreateOrderSheet arr
 End Sub
+Sub CreateNeedsSheet()
+Dim dict As Scripting.Dictionary, mapRange As Range, lastMapRange As Integer
+Dim k As String, v As Double, cw As Double
+Worksheets("Needs").Cells.ClearContents
+Set dict = New Scripting.Dictionary
 
+lastMapRange = Worksheets("Daily").Range("C" & Rows.Count).End(xlUp).Row
+Set mapRange = Worksheets("Daily").Range("A2:C" & lastMapRange)
+
+
+For Each r In mapRange.Rows
+    k = r.Cells(, 3).value
+    cw = Worksheets("Master List").Range("C3:C" & Worksheets("Master List").Range("C" & Rows.Count).End(xlUp).Row).Find(k).Offset(0, 2).value
+    If r.Cells(, 2) = "Pound" Then
+        v = Format((r.Cells(, 1).value / cw), "0.00")
+    ElseIf r.Cells(, 2) = "Pint*" Then
+        v = Format((r.Cells(, 1).value / 12), "0.00")
+    ElseIf r.Cells(, 2) = "Pieces" Or r.Cells(, 2) = "Bunch" Or r.Cells(, 2) = "Each" Then
+        v = Format((r.Cells(, 1).value / 40), "0.00")
+    Else
+        v = Format(r.Cells(, 1).value, "0.00")
+    End If
+    dict(k) = dict(k) + v
+Next r
+
+Dim key As Variant, writeRange As Range, i As Integer, sortHelp As Range
+
+i = 1
+Set writeRange = Worksheets("Needs").Range("A1:B" & dict.Count)
+Set sortHelp = Worksheets("Needs").Range("A1:A" & dict.Count)
+
+
+For Each key In dict.Keys
+    Debug.Print key, dict(key)
+    writeRange.Cells(i, 1) = key
+    writeRange.Cells(i, 2) = dict(key)
+    i = i + 1
+Next key
+
+writeRange.Sort sortHelp
+
+End Sub
 'Sub to check subs in this Mod
 Sub CheckReportTest()
 Dim orderArr() As OrderRecord
