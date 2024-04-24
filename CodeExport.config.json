@@ -14,15 +14,10 @@
 		"ShipSelectForm": "ShipSelectForm.frm",
 		"Main": "Main.bas",
 		"Sheet16": "Sheet16.cls",
-		"Breakdown": "Breakdown.bas"
+		"Breakdown": "Breakdown.bas",
+		"HomeScreen": "HomeScreen.cls",
+		"Module1": "Module1.bas"
 	},
 	"References": [
-		{
-			"Name": "bpac",
-			"Description": "Brother b-PAC 3.2 Type Library",
-			"GUID": "{90359D74-B7D9-467F-B938-3883F4CAB582}",
-			"Major": 1,
-			"Minor": 3
-		}
 	]
 }
