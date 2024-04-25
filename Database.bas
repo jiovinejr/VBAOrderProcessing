@@ -174,7 +174,6 @@ End Sub
 'Deletes helper record in ShipDB
 Sub DeleteFromShipDB(shipName As String)
 DeleteSingleShipFromDB shipName, "ShipDatabase"
-DeleteFromDeckDB shipName
 End Sub
 
 'Master function for deleting a single ship from a sheet
@@ -217,6 +216,7 @@ Set allShipsRange = db.Range("A1:A" & lastShip)
 
 For Each ship In allShipsRange
     DeleteFromOrderDB CStr(ship)
+    DeleteFromShipDB CStr(ship)
 Next ship
 
 allShipsRange.ClearContents

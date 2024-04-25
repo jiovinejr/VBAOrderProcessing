@@ -18,7 +18,7 @@ Dim arr As Variant, check As String
 arr = GetShipsFromDB("DailyDatabase")
 If IsEmpty(arr) Then
     MsgBox "Add ships to daily"
-    DeckRadio.value = True
+    DailyRadio.value = False
 ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
     check = CStr(arr)
     ShipsDrop.Clear
@@ -34,10 +34,24 @@ End Sub
 Private Sub DeckRadio_Click()
 Dim arr As Variant
 arr = GetShipsFromDB("ShipsOnDeck")
-ShipsDrop.value = arr(1, 1)
-ShipsDrop.List = arr
+If IsEmpty(arr) Then
+    MsgBox "Deck Clear"
+    DeckRadio.value = False
+ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
+    check = CStr(arr)
+    ShipsDrop.Clear
+    ShipsDrop.value = check
+    ShipsDrop.AddItem (check)
+Else
+    ShipsDrop.List = arr
+    ShipsDrop.Text = ShipsDrop.List(1)
+End If
 End Sub
 
+
+Private Sub NewOrderButton_Click()
+Worksheets("Order").Activate
+End Sub
 
 Private Sub ShipsDrop_Change()
 Dim searchRange As Range, lastInSearchRange As Integer

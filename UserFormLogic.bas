@@ -81,23 +81,29 @@ End Sub
 Sub DisplayShipSelectForm()
 
 'Initialize
-Dim listRange As Variant
+Dim listRange As Range
 Dim lastRow As Integer
 
 'Establish the range where the ships on deck are listed
 lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).Row
+Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
 
-SortRange
+If WorksheetFunction.CountA(listRange) <> 0 Then
 
-'Make the list box draw data from range using location string rather than range method
-'Just a finicky part of VBA
-With ShipSelectForm
-    .ShipsOnDeck.List = GetShipsFromDB("ShipsOnDeck")
-End With
-
-'Show the form
-ShipSelectForm.Show
+    SortRange
     
+    'Make the list box draw data from range using location string rather than range method
+    'Just a finicky part of VBA
+    With ShipSelectForm
+        .ShipsOnDeckBox.List = GetShipsFromDB("ShipsOnDeck")
+    End With
+    
+    'Show the form
+    ShipSelectForm.Show
+Else
+    MsgBox "Empty Deck"
+    Exit Sub
+End If
 End Sub
 
 Sub SortRange()
@@ -127,11 +133,11 @@ Dim i As Integer, shipName As String
 'In the form
 With ShipSelectForm
 'Loop through the list box
-For i = 0 To .ShipsOnDeck.ListCount - 1
+For i = 0 To .ShipsOnDeckBox.ListCount - 1
     'Helper variable to cast input to String
-    shipName = CStr(.ShipsOnDeck.List(i))
+    shipName = CStr(.ShipsOnDeckBox.List(i))
     'When you come across a selected item
-    If .ShipsOnDeck.Selected(i) Then
+    If .ShipsOnDeckBox.Selected(i) Then
         'Take it out of the on deck sheet
         DeleteFromDeckDB shipName
         'Put into the daily sheet
