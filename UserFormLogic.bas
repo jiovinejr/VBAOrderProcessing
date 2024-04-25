@@ -87,12 +87,12 @@ Dim lastRow As Integer
 'Establish the range where the ships on deck are listed
 lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).Row
 
-'SortRange
+SortRange
 
 'Make the list box draw data from range using location string rather than range method
 'Just a finicky part of VBA
 With ShipSelectForm
-    .ShipsOnDeckBox.RowSource = "ShipsOnDeck!A1:A" & lastRow
+    .ShipsOnDeck.RowSource = "ShipsOnDeck!A1:A" & lastRow
 End With
 
 'Show the form
@@ -127,11 +127,13 @@ Dim i As Integer, shipName As String
 'In the form
 With ShipSelectForm
 'Loop through the list box
-For i = 0 To .ShipsOnDeckBox.ListCount - 1
+For i = 0 To .ShipsOnDeck.ListCount - 1
     'Helper variable to cast input to String
-    shipName = CStr(.ShipsOnDeckBox.List(i))
+    shipName = CStr(.ShipsOnDeck.List(i))
     'When you come across a selected item
-    If .ShipsOnDeckBox.Selected(i) Then
+    If .ShipsOnDeck.Selected(i) Then
+        'Take it out of the on deck sheet
+        DeleteFromDeckDB shipName
         'Put into the daily sheet
         PostToDailyDB shipName
     End If

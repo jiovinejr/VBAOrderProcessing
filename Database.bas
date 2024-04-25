@@ -28,9 +28,6 @@ startRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
 'Length of the order to help with locating full orders later
 numberOfItems = UBound(arr) + 1
 
-'Also add the shipname and number of items to help with location of full order later
-PostToShipDB shipName, numberOfItems
-
 'Use our variable to carve out the chunk of the DB we need
 Set targetRange = db.Range("A" & startRow & ":G" & startRow + (numberOfItems - 1))
 
@@ -50,7 +47,9 @@ For Each ordRec In arr
     i = i + 1
 Next ordRec
 
-SortRange
+'Also add the shipname and number of items to help with location of full order later
+PostToShipDB shipName, numberOfItems
+
 End Sub
 
 'Adds ship name and number of items to help with location of full order later
@@ -131,7 +130,7 @@ End If
 'Write the shipName to the destination
 targetCell.Offset(offsetAmount, 0).value = shipName
 
-
+WriteLists
 End Sub
 
 'Sends a ship name to Deck
@@ -151,10 +150,6 @@ Sub DeleteFromOrderDB(shipName As String)
 'Initialize
 Dim db As Worksheet, allShipsRange As Range
 Dim startRowOfOrder As Integer, numOfItems As Integer
-
-If shipName = "" Then
-Exit Sub
-End If
 
 'Set sheet and search range for ship names
 Set db = Worksheets("OrderDatabase")
@@ -279,13 +274,11 @@ deckType = VarType(deckArr)
 If Not IsEmpty(dailyArr) Then
     If dailyType <> 8 Then
         For Each ship In dailyArr
-            DeleteFromDeckDB CStr(ship)
             ordRec = CreateRecordFromDB(CStr(ship))
             sorted = SortOrderRecord(ordRec)
             WriteToItemList sorted, "Daily"
         Next ship
     Else
-        DeleteFromDeckDB CStr(dailyArr)
         ordRec = CreateRecordFromDB(CStr(dailyArr))
         sorted = SortOrderRecord(ordRec)
         WriteToItemList sorted, "Daily"
