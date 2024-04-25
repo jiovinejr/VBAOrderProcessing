@@ -17,6 +17,9 @@ Attribute VB_Exposed = False
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
+>>>>>>> parent of 694c62f (Starting Print stuff)
+=======
 >>>>>>> parent of 694c62f (Starting Print stuff)
 Private Sub Ok_Click()
 
