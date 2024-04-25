@@ -91,3 +91,87 @@ orderArr = CreateRecordFromPaste
 CreateCheckSheet orderArr
 CreateOrderSheet orderArr
 End Sub
+
+
+
+Sub WriteToItemList(arr() As OrderRecord, sheetname As String)
+
+'Initialize
+Dim db As Worksheet, targetRange As Range
+Dim startRow As Integer, numberOfItems As Integer, i As Integer
+
+'Set the DB sheet to a var
+Set db = Worksheets(sheetname)
+
+'Find the first empty row
+startRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
+
+'Length of the order to help with locating full orders later
+numberOfItems = UBound(arr) + 1
+
+'Use our variable to carve out the chunk of the DB we need
+Set targetRange = db.Range("A" & startRow & ":D" & startRow + (numberOfItems - 1))
+
+'Incrementor
+i = 1
+
+'Loop through array and write data to database
+For Each ordRec In arr
+    targetRange.Cells(i, 1) = ordRec.Quantity
+    targetRange.Cells(i, 2) = ordRec.CleanMeasurement
+    targetRange.Cells(i, 3) = ordRec.CleanItem
+    targetRange.Cells(i, 4) = ordRec.ship
+    'Increment
+    i = i + 1
+Next ordRec
+End Sub
+
+
+Sub WriteLists()
+Dim dailyArr As Variant, deckArr As Variant, ship As Variant
+Dim ordRec() As OrderRecord, sorted() As OrderRecord
+Dim dailyType As Integer, deckType As Integer
+
+Worksheets("Daily").Range("A2:D10000").ClearContents
+Worksheets("On Deck").Range("A2:D10000").ClearContents
+
+dailyArr = GetShipsFromDB("DailyDatabase")
+
+dailyType = VarType(dailyArr)
+
+
+If Not IsEmpty(dailyArr) Then
+    If dailyType <> 8 Then
+        For Each ship In dailyArr
+            'DeleteFromDeckDB CStr(ship)
+            ordRec = CreateRecordFromDB(CStr(ship))
+            sorted = SortOrderRecord(ordRec)
+            WriteToItemList sorted, "Daily"
+        Next ship
+    Else
+        'DeleteFromDeckDB CStr(dailyArr)
+        ordRec = CreateRecordFromDB(CStr(dailyArr))
+        sorted = SortOrderRecord(ordRec)
+        WriteToItemList sorted, "Daily"
+    End If
+End If
+
+deckArr = GetShipsFromDB("ShipsOnDeck")
+deckType = VarType(deckArr)
+
+If Not IsEmpty(deckArr) Then
+    If deckType <> 8 Then
+        For Each ship In deckArr
+            ordRec = CreateRecordFromDB(CStr(ship))
+            sorted = SortOrderRecord(ordRec)
+            WriteToItemList sorted, "On Deck"
+        Next ship
+    Else
+        ordRec = CreateRecordFromDB(CStr(deckArr))
+        sorted = SortOrderRecord(ordRec)
+        WriteToItemList sorted, "On Deck"
+    End If
+End If
+
+
+End Sub

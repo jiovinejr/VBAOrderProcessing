@@ -111,13 +111,13 @@ End With
 End Sub
 
 'Master function for adding a single ship to a sheet
-Sub PostShipName(shipName As String, sheetName As String)
+Sub PostShipName(shipName As String, sheetname As String)
 
 'Initialize
 Dim db As Worksheet, offsetAmount As Integer, targetCell As Range
 
 'Establish a destination
-Set db = Worksheets(sheetName)
+Set db = Worksheets(sheetname)
 offsetAmount = db.Range("A" & Rows.Count).End(xlUp).Row
 Set targetCell = db.Range("A1")
 
@@ -166,7 +166,7 @@ For i = 1 To numOfItems
 Next
 
 'Also when that's done, delete from the ship DB
-'DeleteFromShipDB shipName
+DeleteFromShipDB shipName
 
 End Sub
 
@@ -174,24 +174,29 @@ End Sub
 'Deletes helper record in ShipDB
 Sub DeleteFromShipDB(shipName As String)
 DeleteSingleShipFromDB shipName, "ShipDatabase"
+DeleteFromDeckDB shipName
+DeleteFromDailyDB shipName
 End Sub
 
 'Master function for deleting a single ship from a sheet
-Sub DeleteSingleShipFromDB(shipName As String, sheetName As String)
+Sub DeleteSingleShipFromDB(shipName As String, sheetname As String)
 
 'Initialize
 Dim db As Worksheet, allShipsRange As Range
 Dim shipRow As Integer
 
 'Establish search area
-Set db = Worksheets(sheetName)
+Set db = Worksheets(sheetname)
 Set allShipsRange = db.Range("A:A")
 
+If WorksheetFunction.CountIf(allShipsRange, shipName) And shipName <> "" Then
 'Find shipname
 shipRow = allShipsRange.Find(shipName).Row
 
 'Delete row from DB
 allShipsRange.Rows(shipRow).EntireRow.Delete
+
+End If
 
 End Sub
 
@@ -214,23 +219,23 @@ Set db = Worksheets("DailyDatabase")
 lastShip = db.Range("A" & Rows.Count).End(xlUp).Row
 Set allShipsRange = db.Range("A1:A" & lastShip)
 
+
 For Each ship In allShipsRange
     DeleteFromOrderDB CStr(ship)
-    DeleteFromShipDB CStr(ship)
 Next ship
 
 allShipsRange.ClearContents
 
 End Sub
 
-Public Function GetShipsFromDB(sheetName As String) As Variant
+Public Function GetShipsFromDB(sheetname As String) As Variant
 
 'Initialize
 Dim db As Worksheet, allShipsRange As Range, lastRow As Integer
 Dim arr() As Variant
 
 'Establish search area
-Set db = Worksheets(sheetName)
+Set db = Worksheets(sheetname)
 lastRow = db.Range("A" & Rows.Count).End(xlUp).Row
 Set allShipsRange = db.Range("A1:A" & lastRow)
 

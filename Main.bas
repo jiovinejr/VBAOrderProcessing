@@ -10,6 +10,7 @@ PostToOrderDB orderArr
 shipName = orderArr(1).ship
 Worksheets("Home").ShipsDrop.value = CStr(shipName)
 Worksheets("Home").DailyRadio.value = True
+WriteLists
 End Sub
 
 Sub ddTest()

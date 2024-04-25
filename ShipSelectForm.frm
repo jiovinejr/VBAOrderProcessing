@@ -16,6 +16,7 @@ Attribute VB_Exposed = False
 
 
 
+
 Private Sub Ok_Click()
 
 Dim answer As Integer
@@ -30,6 +31,7 @@ Else
 End If
 
 ShipSelectForm.Hide
+WriteLists
 
 End Sub
 
