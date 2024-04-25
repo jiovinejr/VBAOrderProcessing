@@ -1,5 +1,5 @@
 Attribute VB_Name = "OLDModule1"
- Option Explicit
+Option Explicit
 
 #If VBA7 Then
     Declare PtrSafe Function apiShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As LongPtr, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As LongPtr
@@ -496,10 +496,11 @@ On Error Resume Next
     Worksheets("Order").Range("A1:C200").ClearContents
     Worksheets("Order").Range("A1").Select
     Worksheets("Order").PasteSpecial Format:="HTML", Link:=False, DisplayAsIcon:=False, NoHTMLFormatting:=True
-If Err.Number = 1004 Then
-    Worksheets("Order").PasteSpecial xlPasteValues
-ElseIf Err.Number <> 0 Then
-    MsgBox "Nothing copied. Copy somethin', will ya!"
+    
+If Err.Number <> 0 Then
+    MsgBox ("Nothing copied. Copy something, will ya!")
 End If
+
+
 
 End Sub
