@@ -23,6 +23,13 @@
 			"GUID": "{90359D74-B7D9-467F-B938-3883F4CAB582}",
 			"Major": 1,
 			"Minor": 3
+		},
+		{
+			"Name": "Scripting",
+			"Description": "Microsoft Scripting Runtime",
+			"GUID": "{420B2830-E718-11CF-893D-00A0C9054228}",
+			"Major": 1,
+			"Minor": 0
 		}
 	]
 }
