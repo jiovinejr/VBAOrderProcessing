@@ -91,7 +91,7 @@ Dim lastRowOfOrder As Integer
 'Set sheet and search range variables
 Set db = Worksheets("OrderDatabase")
 Set allShipsRange = db.Range("G1:G" & db.Range("G" & Rows.Count).End(xlUp).Row)
-
+If shipName <> "" Then
 'Retrieve the number of items
 numOfItems = Application.WorksheetFunction.XLookup(shipName, Worksheets("ShipDatabase").Range("A:A"), Worksheets("ShipDatabase").Range("B:B"))
 
@@ -106,6 +106,7 @@ arr = MapToOrderRecord(orderRange, shipName)
 
 'Return Statement
 CreateRecordFromDB = arr
+End If
 
 End Function
 

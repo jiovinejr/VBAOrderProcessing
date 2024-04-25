@@ -46,7 +46,7 @@ Dim orderArr() As OrderRecord, sortedArr() As OrderRecord
 shipName = ShipsDrop.Text
 lastInSearchRange = Worksheets("ShipDatabase").Range("A" & Rows.Count).End(xlUp).Row
 Set searchRange = Worksheets("ShipDatabase").Range("A1:A" & lastInSearchRange)
-If Application.CountIf(searchRange, shipName) > 0 Then
+If Application.CountIf(searchRange, shipName) > 0 And shipName <> "" Then
     arrToSort = CreateRecordFromDB(shipName)
     orderArr = CreateRecordFromDB(shipName)
     sortedArr = SortOrderRecord(arrToSort)

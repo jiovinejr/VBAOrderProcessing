@@ -18,10 +18,9 @@ Attribute VB_Exposed = False
 
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> parent of 694c62f (Starting Print stuff)
+
+
 'Handle form button click
 Private Sub AddBtn_Click()
 
