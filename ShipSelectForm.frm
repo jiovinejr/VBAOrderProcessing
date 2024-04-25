@@ -14,6 +14,10 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 694c62f (Starting Print stuff)
 Private Sub Ok_Click()
 
 Dim answer As Integer
