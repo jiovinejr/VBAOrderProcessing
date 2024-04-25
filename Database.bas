@@ -18,8 +18,6 @@ Set db = Worksheets("OrderDatabase")
 'Just in case the re-entering has additions or subtractions
 If Application.WorksheetFunction.CountIf(db.Range("G:G"), shipName) > 0 Then
     DeleteFromOrderDB shipName
-    DeleteFromShipDB shipName
-    DeleteFromDeckDB shipName
 End If
 
 'Find the first empty row
@@ -113,13 +111,13 @@ End With
 End Sub
 
 'Master function for adding a single ship to a sheet
-Sub PostShipName(shipName As String, sheetname As String)
+Sub PostShipName(shipName As String, sheetName As String)
 
 'Initialize
 Dim db As Worksheet, offsetAmount As Integer, targetCell As Range
 
 'Establish a destination
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 offsetAmount = db.Range("A" & Rows.Count).End(xlUp).Row
 Set targetCell = db.Range("A1")
 
@@ -129,8 +127,6 @@ End If
 
 'Write the shipName to the destination
 targetCell.Offset(offsetAmount, 0).value = shipName
-
-WriteLists
 End Sub
 
 'Sends a ship name to Deck
@@ -141,6 +137,7 @@ End Sub
 'Sends a ship name to Daily
 Sub PostToDailyDB(shipName As String)
 PostShipName shipName, "DailyDatabase"
+'SortRange
 End Sub
 
 
@@ -169,6 +166,7 @@ For i = 1 To numOfItems
 Next
 
 'Also when that's done, delete from the ship DB
+'DeleteFromShipDB shipName
 
 End Sub
 
@@ -176,17 +174,18 @@ End Sub
 'Deletes helper record in ShipDB
 Sub DeleteFromShipDB(shipName As String)
 DeleteSingleShipFromDB shipName, "ShipDatabase"
+DeleteFromDeckDB shipName
 End Sub
 
 'Master function for deleting a single ship from a sheet
-Sub DeleteSingleShipFromDB(shipName As String, sheetname As String)
+Sub DeleteSingleShipFromDB(shipName As String, sheetName As String)
 
 'Initialize
 Dim db As Worksheet, allShipsRange As Range
 Dim shipRow As Integer
 
 'Establish search area
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 Set allShipsRange = db.Range("A:A")
 
 'Find shipname
@@ -218,98 +217,20 @@ Set allShipsRange = db.Range("A1:A" & lastShip)
 
 For Each ship In allShipsRange
     DeleteFromOrderDB CStr(ship)
-    DeleteFromShipDB CStr(ship)
 Next ship
 
 allShipsRange.ClearContents
 
 End Sub
 
-Sub WriteToItemList(arr() As OrderRecord, sheetname As String)
-
-'Initialize
-Dim db As Worksheet, targetRange As Range
-Dim startRow As Integer, numberOfItems As Integer, i As Integer
-
-'Set the DB sheet to a var
-Set db = Worksheets(sheetname)
-
-'Find the first empty row
-startRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
-
-'Length of the order to help with locating full orders later
-numberOfItems = UBound(arr) + 1
-
-'Use our variable to carve out the chunk of the DB we need
-Set targetRange = db.Range("A" & startRow & ":D" & startRow + (numberOfItems - 1))
-
-'Incrementor
-i = 1
-
-'Loop through array and write data to database
-For Each ordRec In arr
-    targetRange.Cells(i, 1) = ordRec.Quantity
-    targetRange.Cells(i, 2) = ordRec.CleanMeasurement
-    targetRange.Cells(i, 3) = ordRec.CleanItem
-    targetRange.Cells(i, 4) = ordRec.ship
-    'Increment
-    i = i + 1
-Next ordRec
-End Sub
-
-Sub WriteLists()
-Dim dailyArr As Variant, deckArr As Variant, ship As Variant
-Dim ordRec() As OrderRecord, sorted() As OrderRecord
-Dim dailyType As Integer, deckType As Integer
-
-Worksheets("Daily").Range("A2:D10000").ClearContents
-Worksheets("On Deck").Range("A2:D10000").ClearContents
-
-dailyArr = GetShipsFromDB("DailyDatabase")
-deckArr = GetShipsFromDB("ShipsOnDeck")
-
-dailyType = VarType(dailyArr)
-deckType = VarType(deckArr)
-
-If Not IsEmpty(dailyArr) Then
-    If dailyType <> 8 Then
-        For Each ship In dailyArr
-            ordRec = CreateRecordFromDB(CStr(ship))
-            sorted = SortOrderRecord(ordRec)
-            WriteToItemList sorted, "Daily"
-        Next ship
-    Else
-        ordRec = CreateRecordFromDB(CStr(dailyArr))
-        sorted = SortOrderRecord(ordRec)
-        WriteToItemList sorted, "Daily"
-    End If
-End If
-
-If Not IsEmpty(deckArr) Then
-    If deckType <> 8 Then
-        For Each ship In deckArr
-            ordRec = CreateRecordFromDB(CStr(ship))
-            sorted = SortOrderRecord(ordRec)
-            WriteToItemList sorted, "On Deck"
-        Next ship
-    Else
-        ordRec = CreateRecordFromDB(CStr(deckArr))
-        sorted = SortOrderRecord(ordRec)
-        WriteToItemList sorted, "On Deck"
-    End If
-End If
-
-
-End Sub
-
-Public Function GetShipsFromDB(sheetname As String) As Variant
+Public Function GetShipsFromDB(sheetName As String) As Variant
 
 'Initialize
 Dim db As Worksheet, allShipsRange As Range, lastRow As Integer
 Dim arr() As Variant
 
 'Establish search area
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 lastRow = db.Range("A" & Rows.Count).End(xlUp).Row
 Set allShipsRange = db.Range("A1:A" & lastRow)
 

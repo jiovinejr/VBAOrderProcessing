@@ -118,7 +118,7 @@ Worksheets("On Deck").Range("A1:D1").AutoFilter
 
 End Sub
 Sub PrintBoxLabels(begin As Variant, last As Variant)
-Dim sheetname As String, labelPath As String, shipName As String, i As Integer
+Dim sheetName As String, labelPath As String, shipName As String, i As Integer
 
 Dim ObjDoc As bpac.Document, kg As Double
     Set ObjDoc = CreateObject("bpac.Document")
@@ -127,7 +127,7 @@ Dim ObjDoc As bpac.Document, kg As Double
     shipName = Worksheets("Label").Range("E1").Text
     
   
-    sheetname = ActiveSheet.Name
+    sheetName = ActiveSheet.Name
     
     ObjDoc.Open (labelPath)
         ObjDoc.StartPrint "", bpoCutAtEnd
@@ -139,7 +139,7 @@ Dim qty As String, meas As String, item As String
                 meas = Range("B" & i).Text
                 item = Range("C" & i).Text
                 
-                If sheetname <> "Label" Then
+                If sheetName <> "Label" Then
                     shipName = Range("D" & i).Text
                 End If
                 
@@ -256,9 +256,9 @@ End Sub
 
 Sub GetActPrint()
 
-    Dim sheetname As String
-    sheetname = ActiveSheet.Name
-    MsgBox sheetname
+    Dim sheetName As String
+    sheetName = ActiveSheet.Name
+    MsgBox sheetName
     
 
 End Sub
