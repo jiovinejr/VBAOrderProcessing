@@ -13,12 +13,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
-
-
-
-
 Private Sub Ok_Click()
 
 Dim answer As Integer
@@ -34,7 +28,7 @@ End If
 
 ShipSelectForm.Hide
 WriteLists
-
+CreateNeedsSheet
 End Sub
 
 Private Sub ShipsOnDeckBox_Change()

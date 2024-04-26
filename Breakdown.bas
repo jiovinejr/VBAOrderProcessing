@@ -23,7 +23,7 @@ Dim caseWeight As Double, i As Integer
 
 
 'Loop through all rows of the order
-For i = 1 To UBound(arr)
+For i = 0 To UBound(arr)
     Quantity = arr(i).Quantity
     packaging = arr(i).CleanMeasurement
     item = arr(i).CleanItem
