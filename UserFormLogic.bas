@@ -82,7 +82,7 @@ Sub DisplayShipSelectForm()
 
 'Initialize
 Dim listRange As Range, shipList As Variant
-Dim lastRow As Integer
+Dim lastRow As Integer, check As Integer
 
 'Establish the range where the ships on deck are listed
 lastRow = Worksheets("ShipsOnDeck").Range("A" & Rows.Count).End(xlUp).Row
@@ -90,20 +90,23 @@ Set listRange = Worksheets("ShipsOnDeck").Range("A1:A" & lastRow)
 shipList = GetShipsFromDB("ShipsOnDeck")
 check = VarType(shipList)
 
+'If there is ANYTHING in the range parameters
 If WorksheetFunction.CountA(listRange) <> 0 Then
-        SortRange
-    'Make the list box draw data from range using location string rather than range method
-    'Just a finicky part of VBA
+    'Sort it
+    SortRange
+    'Make the list box draw data from the established range
     With ShipSelectForm
+        'Ship list can either be a string (VarType: 8)
         If check = 8 Then
             .ShipsOnDeckBox.AddItem (shipList)
+        'Or an array of Strings
         Else
             .ShipsOnDeckBox.List = shipList
         End If
     End With
-    
     'Show the form
     ShipSelectForm.Show
+'If theres nothing in the range let the user know.
 Else
     MsgBox "Empty Deck"
     Exit Sub
