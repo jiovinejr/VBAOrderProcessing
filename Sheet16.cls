@@ -7,27 +7,48 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
+'Code involving form controls that are imbedded in the Home Sheet
 Option Compare Text
 
+'Clicking the "Daily List" button uses method in "UserFormLogic" and other code in the form itself to trigger
 Private Sub DailyListBtn_Click()
 
 DisplayShipSelectForm
 
 End Sub
 
+'Checking "Daily" radio button
 Private Sub DailyRadio_Click()
+
+'Initialize
 Dim arr As Variant, check As String
+
+'Store ships from daily database sheet to a variable
 arr = GetShipsFromDB("DailyDatabase")
+
+'If the variable is empty
 If IsEmpty(arr) Then
+    'Alert the user
     MsgBox "Add ships to daily"
+    'Uncheck the radio button
     DailyRadio.value = False
+    
+'If theres only one item in the sheet the variable will be a string
 ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
+    'Cast to a string JIC
     check = CStr(arr)
+    'Clear out data in the dropdown menu
     ShipsDrop.Clear
+    'Display the string in the window
     ShipsDrop.value = check
+    'Add it to the dropdown list
     ShipsDrop.AddItem (check)
+
+'If the variable has more than one item treat it as an array
 Else
+    'Set entire array in the dropdown box
     ShipsDrop.List = arr
+    'Display the first item in the window
     ShipsDrop.Text = ShipsDrop.List(1)
 End If
 
