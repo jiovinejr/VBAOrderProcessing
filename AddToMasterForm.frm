@@ -13,23 +13,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 'Handle form button click
 Private Sub AddBtn_Click()
 
@@ -75,9 +58,17 @@ End Sub
 
 'Takes care of category drop down upon creation
 Private Sub UserForm_Initialize()
+
+'Disable the button until data entered is validated
 AddBtn.Enabled = False
+
+'Make the button hint at the fact that everything needs to be filled out before submit
 AddBtn.Caption = "Fill out all fields"
+
+'Error message not shown unless need be
 NumberErrorLabel.Visible = False
+
+'Create options for category box
 CategoryBox.AddItem "Fruits"
 CategoryBox.AddItem "Vegetables"
 End Sub
