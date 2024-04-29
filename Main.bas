@@ -5,8 +5,8 @@ Dim orderArr() As OrderRecord, home As Worksheet
 Dim shipName As String
 
 orderArr = CreateRecordFromPaste
-CreateBothReports orderArr
 PostToOrderDB orderArr
+CreateBothReports orderArr
 shipName = orderArr(1).ship
 Worksheets("Home").ShipsDrop.value = CStr(shipName)
 Worksheets("Home").DailyRadio.value = True

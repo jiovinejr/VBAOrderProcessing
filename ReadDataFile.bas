@@ -129,8 +129,8 @@ arr = CreateRecordFromDB(ship)
 'For Each rec In orderArr
 '    Debug.Print rec.toString
 'Next rec
-For Each rec In arr
-    Debug.Print rec.toString
-Next rec
+For Each Rec In arr
+    Debug.Print Rec.toString
+Next Rec
 End Sub
 
