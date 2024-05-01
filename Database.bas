@@ -212,22 +212,27 @@ End Sub
 
 'Its a new day clear out
 Sub ClearDailyDB()
+
+'Initialize
 Dim db As Worksheet, allShipsRange As Range
 Dim i As Integer, lastShip As Integer
 
+'Establish where to find the ship names
 Set db = Worksheets("DailyDatabase")
 lastShip = db.Range("A" & Rows.Count).End(xlUp).Row
 Set allShipsRange = db.Range("A1:A" & lastShip)
 
-
+'Use those ship names to free up space in the order DB
 For Each ship In allShipsRange
     DeleteFromOrderDB CStr(ship)
 Next ship
 
+'Clear out the names of the ships in the Daily DB
 allShipsRange.ClearContents
 
 End Sub
 
+'Used to return an array of an order already in the system
 Public Function GetShipsFromDB(sheetname As String) As Variant
 
 'Initialize
@@ -237,13 +242,17 @@ Dim arr() As Variant
 'Establish search area
 Set db = Worksheets(sheetname)
 lastRow = db.Range("A" & Rows.Count).End(xlUp).Row
+
+'Set the resulting range to a variable
 Set allShipsRange = db.Range("A1:A" & lastRow)
 
+'Return the values in that range as an array
 GetShipsFromDB = allShipsRange.value
 
 
 End Function
 
+'TEST
 Sub GetDBTest()
 Dim ships As Variant, ship As Variant
 ships = GetShipsFromDB("ShipsOnDeck")
