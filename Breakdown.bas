@@ -2,17 +2,15 @@ Attribute VB_Name = "Breakdown"
 'Creates the list of stickers to be printed
 Sub MakeStickers(arr() As OrderRecord, shipName As Variant)
 
-Dim targetCell As Range, splitSize As Double
+Dim targetCell As Object, splitSize As Double
     
 'TargetCell is where the result will start being written
-Set targetCell = Worksheets("Home").Range("A1")
+Set targetCell = Worksheets("Home").LabelsBox
 splitSize = 1
 
 'Clear the previous labels, if there are any
 With Worksheets("Home")
-    If .Range("A1").value <> "" Then
-        .Range("A1:C" & .Range("C" & .Rows.Count).End(xlUp).Row).Clear
-    End If
+    targetCell.Clear
 End With
 
 'Switch to Home
@@ -20,7 +18,7 @@ Worksheets("Home").Activate
 
 Dim Quantity As Double, packaging As String, item As String, rowCounter As Long
 Dim caseWeight As Double, i As Integer
-
+rowCounter = 0
 
 'Loop through all rows of the order
 For i = 0 To UBound(arr)
@@ -28,7 +26,8 @@ For i = 0 To UBound(arr)
     packaging = arr(i).CleanMeasurement
     item = arr(i).CleanItem
     caseWeight = arr(i).ItemCaseWeight
-
+    
+    'Process based on different scenarios
     If packaging = "Bag" And item Like "*Radish*" Then
         ProcessBagRadish Quantity, packaging, item, targetCell, rowCounter
     ElseIf item Like "*Watermelon*" Then
@@ -44,7 +43,7 @@ Next i
 
 End Sub
 
-Sub ProcessBagRadish(Quantity As Double, packaging As String, item As String, targetCell As Range, ByRef rowCounter As Long)
+Sub ProcessBagRadish(Quantity As Double, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long)
     While Quantity > 30
         WriteLabel 30, packaging, item, targetCell, rowCounter
         Quantity = Quantity - 30
@@ -52,7 +51,7 @@ Sub ProcessBagRadish(Quantity As Double, packaging As String, item As String, ta
     WriteLabel Quantity, packaging, item, targetCell, rowCounter
 End Sub
 
-Sub ProcessWatermelon(Quantity As Double, packaging As String, item As String, targetCell As Range, ByRef rowCounter As Long, caseWeight As Double)
+Sub ProcessWatermelon(Quantity As Double, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long, caseWeight As Double)
     While Quantity > caseWeight
         WriteLabel "", packaging, item, targetCell, rowCounter
         Quantity = Quantity - caseWeight
@@ -60,7 +59,7 @@ Sub ProcessWatermelon(Quantity As Double, packaging As String, item As String, t
     WriteLabel "", packaging, item, targetCell, rowCounter
 End Sub
 
-Sub ProcessBunch(Quantity As Double, packaging As String, item As String, targetCell As Range, ByRef rowCounter As Long)
+Sub ProcessBunch(Quantity As Double, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long)
     While Quantity > 48
         WriteLabel 48, packaging, item, targetCell, rowCounter
         Quantity = Quantity - 48
@@ -68,7 +67,7 @@ Sub ProcessBunch(Quantity As Double, packaging As String, item As String, target
     WriteLabel Quantity, packaging, item, targetCell, rowCounter
 End Sub
 
-Sub ProcessNonPound(Quantity As Double, packaging As String, item As String, targetCell As Range, ByRef rowCounter As Long, splitSize As Double)
+Sub ProcessNonPound(Quantity As Double, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long, splitSize As Double)
     While Quantity > splitSize
         WriteLabel splitSize, packaging, item, targetCell, rowCounter
         Quantity = Quantity - splitSize
@@ -76,7 +75,7 @@ Sub ProcessNonPound(Quantity As Double, packaging As String, item As String, tar
     WriteLabel Quantity, packaging, item, targetCell, rowCounter
 End Sub
 
-Sub ProcessPound(Quantity As Double, packaging As String, item As String, targetCell As Range, ByRef rowCounter As Long, caseWeight As Double)
+Sub ProcessPound(Quantity As Double, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long, caseWeight As Double)
     While Quantity > caseWeight
         WriteLabel caseWeight, packaging, item, targetCell, rowCounter
         Quantity = Quantity - caseWeight
@@ -84,11 +83,13 @@ Sub ProcessPound(Quantity As Double, packaging As String, item As String, target
     WriteLabel Quantity, packaging, item, targetCell, rowCounter
 End Sub
 
-Sub WriteLabel(Quantity As Variant, packaging As String, item As String, targetCell As Range, ByRef rowCounter As Long)
+Sub WriteLabel(Quantity As Variant, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long)
     ' Write label information to the target cell and increment the row counter
-    targetCell.Offset(rowCounter, 0).value = Quantity
-    targetCell.Offset(rowCounter, 1).value = packaging
-    targetCell.Offset(rowCounter, 2).value = item
+    targetCell.AddItem
+    targetCell.List(rowCounter, 0) = Quantity
+    targetCell.List(rowCounter, 1) = packaging
+    targetCell.List(rowCounter, 2) = item
+    targetCell.Height = 317.25
     rowCounter = rowCounter + 1
 End Sub
 

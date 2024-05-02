@@ -72,6 +72,11 @@ Else
 End If
 End Sub
 
+
+Private Sub LabelsBox_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+''fjfj
+End Sub
+
 'Navigation
 'Brings you to Order Sheet
 Private Sub NewOrderButton_Click()
@@ -149,3 +154,5 @@ Next i
 ItemSearchResults.Height = 144.75
 
 End Sub
+
+

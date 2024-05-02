@@ -14,6 +14,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+
 'Ship Selection for daily list
 'Handle when someone clicks the ok button after selection
 Private Sub Ok_Click()
