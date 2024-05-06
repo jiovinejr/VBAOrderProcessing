@@ -33,7 +33,20 @@ WriteLists
 
 
 End Sub
+Sub PasteSpeacial()
 
+On Error Resume Next
+    Worksheets("Order").Range("A1:C200").ClearContents
+    Worksheets("Order").Range("A1").Select
+    Worksheets("Order").PasteSpecial Format:="HTML", Link:=False, DisplayAsIcon:=False, NoHTMLFormatting:=True
+    
+If Err.Number <> 0 Then
+    MsgBox ("Nothing copied. Copy something, will ya!")
+End If
+
+
+
+End Sub
 
 'TEST to check how to manipulate whats in the dropdown menu window
 Sub ddTest()

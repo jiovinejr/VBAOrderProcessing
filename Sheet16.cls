@@ -76,15 +76,27 @@ Private Sub LabelsBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     PrintBoxLabels LabelsBox.ListIndex, LabelsBox.ListIndex
 End Sub
 
+Private Sub MultiSkidBtn_Click()
+MultiSkid
+End Sub
+
 'Navigation
 'Brings you to Order Sheet
 Private Sub NewOrderButton_Click()
 Worksheets("Order").Activate
 End Sub
 
+Private Sub OrderAndCheckBtn_Click()
+PrintOrderAndCheck
+End Sub
+
 Private Sub PrintAllLabels_Click()
 PrintBoxLabels 0, Worksheets("Home").LabelsBox.ListCount - 1
-PrintRollLabel
+PrintRollLabel ShipsDrop.Text
+End Sub
+
+Private Sub PrintSkidLabelBtn_Click()
+PrintSkidLabel ShipsDrop.Text
 End Sub
 
 'Sub to handle bringing up reports on each ship
@@ -120,21 +132,31 @@ End Sub
 'Used in conjuction with ShowFoundItems to create a dynamic filtering list of items in daily sheet
 'Re-filters with every key stroke
 Private Sub ItemSearchBar_Change()
-ShowFoundItems ItemSearchBar.Text
+ShowFoundItems ItemSearchBar.Text, ItemSearchBar2.Text
+End Sub
+
+Private Sub ItemSearchBar2_Change()
+ShowFoundItems ItemSearchBar.Text, ItemSearchBar2.Text
 End Sub
 
 'Displays results of what is in the search bar
-Sub ShowFoundItems(searchTerm As String)
+Sub ShowFoundItems(LeftSearchTerm As String, RightSearchTerm As String)
 
 'Initialize
 'TODO: Work on variable names
-Dim dailyRange As Range, i As Integer, last As Integer, lookUp As String, j As Integer
-
+Dim dailyRange As Range, i As Integer, last As Integer, j As Integer
+Dim leftLookUp As String, rightLookup As String
 'Clear the results box on key stroke
 ItemSearchResults.Clear
 
 'Add wild cards before and after whatever gets typed into the search bar
-lookUp = "*" & searchTerm & "*"
+leftLookUp = "*" & LeftSearchTerm & "*"
+
+If RightSearchTerm = "" Then
+    rightLookup = leftLookUp
+Else
+    rightLookup = "*" & RightSearchTerm & "*"
+End If
 
 'Establish search area
 last = Worksheets("Daily").Range("D" & Rows.Count).End(xlUp).Row
@@ -146,7 +168,7 @@ j = 0
 'Loop through the rows in daily
 For i = 1 To last
     'If anything resembles the search term write it into the box
-    If dailyRange.Cells(i, 3).value Like lookUp Then
+    If dailyRange.Cells(i, 3).value Like leftLookUp Or dailyRange.Cells(i, 3).value Like rightLookup Then
         ItemSearchResults.AddItem
         ItemSearchResults.list(j, 0) = dailyRange.Cells(i, 1).value
         ItemSearchResults.list(j, 1) = dailyRange.Cells(i, 2).value
