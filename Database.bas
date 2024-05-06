@@ -111,13 +111,13 @@ End With
 End Sub
 
 'Master function for adding a single ship to a sheet
-Sub PostShipName(shipName As String, sheetname As String)
+Sub PostShipName(shipName As String, sheetName As String)
 
 'Initialize
 Dim db As Worksheet, offsetAmount As Integer, targetCell As Range
 
 'Establish a destination
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 offsetAmount = db.Range("A" & Rows.Count).End(xlUp).Row
 Set targetCell = db.Range("A1")
 
@@ -179,14 +179,14 @@ DeleteFromDailyDB shipName
 End Sub
 
 'Master function for deleting a single ship from a sheet
-Sub DeleteSingleShipFromDB(shipName As String, sheetname As String)
+Sub DeleteSingleShipFromDB(shipName As String, sheetName As String)
 
 'Initialize
 Dim db As Worksheet, allShipsRange As Range
 Dim shipRow As Integer
 
 'Establish search area
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 Set allShipsRange = db.Range("A:A")
 
 If WorksheetFunction.CountIf(allShipsRange, shipName) And shipName <> "" Then
@@ -233,14 +233,14 @@ allShipsRange.ClearContents
 End Sub
 
 'Used to return an array of an order already in the system
-Public Function GetShipsFromDB(sheetname As String) As Variant
+Public Function GetShipsFromDB(sheetName As String) As Variant
 
 'Initialize
 Dim db As Worksheet, allShipsRange As Range, lastRow As Integer
 Dim arr() As Variant
 
 'Establish search area
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 lastRow = db.Range("A" & Rows.Count).End(xlUp).Row
 
 'Set the resulting range to a variable

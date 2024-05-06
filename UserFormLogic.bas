@@ -101,7 +101,7 @@ If WorksheetFunction.CountA(listRange) <> 0 Then
             .ShipsOnDeckBox.AddItem (shipList)
         'Or an array of Strings
         Else
-            .ShipsOnDeckBox.List = shipList
+            .ShipsOnDeckBox.list = shipList
         End If
     End With
     'Show the form
@@ -142,7 +142,7 @@ With ShipSelectForm
 'Loop through the list box
 For i = 0 To .ShipsOnDeckBox.ListCount - 1
     'Helper variable to cast input to String
-    shipName = CStr(.ShipsOnDeckBox.List(i))
+    shipName = CStr(.ShipsOnDeckBox.list(i))
     'When you come across a selected item
     If .ShipsOnDeckBox.Selected(i) Then
         'Take it out of the on deck sheet

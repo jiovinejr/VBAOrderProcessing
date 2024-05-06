@@ -46,9 +46,9 @@ ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
 'If the variable has more than one item treat it as an array
 Else
     'Set entire array in the dropdown box
-    ShipsDrop.List = arr
+    ShipsDrop.list = arr
     'Display the first item in the window
-    ShipsDrop.Text = ShipsDrop.List(1)
+    ShipsDrop.Text = ShipsDrop.list(1)
 End If
 
 End Sub
@@ -67,20 +67,24 @@ ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
     ShipsDrop.value = check
     ShipsDrop.AddItem (check)
 Else
-    ShipsDrop.List = arr
-    ShipsDrop.Text = ShipsDrop.List(1)
+    ShipsDrop.list = arr
+    ShipsDrop.Text = ShipsDrop.list(1)
 End If
 End Sub
 
-
-Private Sub LabelsBox_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
-''fjfj
+Private Sub LabelsBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+    PrintBoxLabels LabelsBox.ListIndex, LabelsBox.ListIndex
 End Sub
 
 'Navigation
 'Brings you to Order Sheet
 Private Sub NewOrderButton_Click()
 Worksheets("Order").Activate
+End Sub
+
+Private Sub PrintAllLabels_Click()
+PrintBoxLabels 0, Worksheets("Home").LabelsBox.ListCount - 1
+PrintRollLabel
 End Sub
 
 'Sub to handle bringing up reports on each ship
@@ -110,6 +114,7 @@ If Application.CountIf(searchRange, shipName) > 0 And shipName <> "" Then
     'Write out stickers to the Home Sheet
     MakeStickers sortedArr, shipName
 End If
+
 End Sub
 
 'Used in conjuction with ShowFoundItems to create a dynamic filtering list of items in daily sheet
@@ -143,10 +148,10 @@ For i = 1 To last
     'If anything resembles the search term write it into the box
     If dailyRange.Cells(i, 3).value Like lookUp Then
         ItemSearchResults.AddItem
-        ItemSearchResults.List(j, 0) = dailyRange.Cells(i, 1).value
-        ItemSearchResults.List(j, 1) = dailyRange.Cells(i, 2).value
-        ItemSearchResults.List(j, 2) = dailyRange.Cells(i, 3).value
-        ItemSearchResults.List(j, 3) = dailyRange.Cells(i, 4).value
+        ItemSearchResults.list(j, 0) = dailyRange.Cells(i, 1).value
+        ItemSearchResults.list(j, 1) = dailyRange.Cells(i, 2).value
+        ItemSearchResults.list(j, 2) = dailyRange.Cells(i, 3).value
+        ItemSearchResults.list(j, 3) = dailyRange.Cells(i, 4).value
         j = j + 1
     End If
 Next i
@@ -154,5 +159,3 @@ Next i
 ItemSearchResults.Height = 144.75
 
 End Sub
-
-

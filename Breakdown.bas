@@ -86,10 +86,10 @@ End Sub
 Sub WriteLabel(Quantity As Variant, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long)
     ' Write label information to the target cell and increment the row counter
     targetCell.AddItem
-    targetCell.List(rowCounter, 0) = Quantity
-    targetCell.List(rowCounter, 1) = packaging
-    targetCell.List(rowCounter, 2) = item
-    targetCell.Height = 317.25
+    targetCell.list(rowCounter, 0) = Quantity
+    targetCell.list(rowCounter, 1) = packaging
+    targetCell.list(rowCounter, 2) = item
+    targetCell.Height = 326.25
     rowCounter = rowCounter + 1
 End Sub
 

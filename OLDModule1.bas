@@ -19,7 +19,7 @@ Sub GoToOrder()
 Worksheets("Order").Activate
 
 End Sub
-Sub MultiSkid()
+Sub OLDMultiSkid()
 
 Dim labelPath As String, skids As Variant, i As Integer, t As String, numOfSkids As Integer
 Dim ObjDoc As bpac.Document
@@ -117,8 +117,8 @@ ws.AutoFilterMode = False
 Worksheets("On Deck").Range("A1:D1").AutoFilter
 
 End Sub
-Sub PrintBoxLabels(begin As Variant, last As Variant)
-Dim sheetname As String, labelPath As String, shipName As String, i As Integer
+Sub OLDPrintBoxLabels(begin As Variant, last As Variant)
+Dim sheetName As String, labelPath As String, shipName As String, i As Integer
 
 Dim ObjDoc As bpac.Document, kg As Double
     Set ObjDoc = CreateObject("bpac.Document")
@@ -127,7 +127,7 @@ Dim ObjDoc As bpac.Document, kg As Double
     shipName = Worksheets("Label").Range("E1").Text
     
   
-    sheetname = ActiveSheet.Name
+    sheetName = ActiveSheet.Name
     
     ObjDoc.Open (labelPath)
         ObjDoc.StartPrint "", bpoCutAtEnd
@@ -139,7 +139,7 @@ Dim qty As String, meas As String, item As String
                 meas = Range("B" & i).Text
                 item = Range("C" & i).Text
                 
-                If sheetname <> "Label" Then
+                If sheetName <> "Label" Then
                     shipName = Range("D" & i).Text
                 End If
                 
@@ -168,7 +168,7 @@ Dim qty As String, meas As String, item As String
     
 End Sub
 
-Sub LabelsForFullOrder()
+Sub OLDLabelsForFullOrder()
 Dim l As Integer, shipName As String
     l = Worksheets("Label") _
         .Range("C" & Rows.Count).End(xlUp).Row
@@ -180,7 +180,7 @@ Dim l As Integer, shipName As String
     PrintRollLabel
 End Sub
 
-Sub SelectedLabels()
+Sub OLDSelectedLabels()
 
     Dim Selected As Integer, r As Integer, last As Integer
 
@@ -192,7 +192,7 @@ Sub SelectedLabels()
     
 End Sub
 
-Sub PrintOrderAndCheck()
+Sub OLDPrintOrderAndCheck()
     Dim orderRng As Variant, checkRng As Variant, mainFolder As String
     Dim shipName As String, lastInOrder As Integer, ship As String, filePath As String
     
@@ -256,9 +256,9 @@ End Sub
 
 Sub GetActPrint()
 
-    Dim sheetname As String
-    sheetname = ActiveSheet.Name
-    MsgBox sheetname
+    Dim sheetName As String
+    sheetName = ActiveSheet.Name
+    MsgBox sheetName
     
 
 End Sub
@@ -447,7 +447,7 @@ End Sub
 '    rowCounter = rowCounter + 1
 'End Sub
 
-Sub PrintSkidLabel()
+Sub OLDPrintSkidLabel()
     
     Dim labelPath As String, shipName As String
 
@@ -470,7 +470,7 @@ End Sub
 
 
 
-Sub PrintRollLabel()
+Sub OLDPrintRollLabel()
 
     Dim ObjDoc As bpac.Document, labelPath As String, shipSend As String
     Set ObjDoc = CreateObject("bpac.Document")
@@ -490,7 +490,7 @@ Sub PrintRollLabel()
 
 End Sub
 
-Sub PasteSpeacial()
+Sub OLDPasteSpeacial()
 
 On Error Resume Next
     Worksheets("Order").Range("A1:C200").ClearContents

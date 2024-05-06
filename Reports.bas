@@ -101,14 +101,14 @@ End Sub
 
 
 'Used to loop through add items to either on deck sheet or daily sheet for reoorting and analysis
-Sub WriteToItemList(arr() As OrderRecord, sheetname As String)
+Sub WriteToItemList(arr() As OrderRecord, sheetName As String)
 
 'Initialize
 Dim db As Worksheet, targetRange As Range
 Dim startRow As Integer, numberOfItems As Integer, i As Integer
 
 'Set the DB sheet to a var
-Set db = Worksheets(sheetname)
+Set db = Worksheets(sheetName)
 
 'Find the first empty row
 startRow = db.Range("A" & Rows.Count).End(xlUp).Row + 1
