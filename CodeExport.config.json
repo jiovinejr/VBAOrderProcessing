@@ -14,7 +14,9 @@
 		"Main": "Main.bas",
 		"Sheet16": "Sheet16.cls",
 		"Breakdown": "Breakdown.bas",
-		"Printing": "Printing.bas"
+		"Printing": "Printing.bas",
+		"Sheet6": "Sheet6.cls",
+		"Sheet2": "Sheet2.cls"
 	},
 	"References": [
 		{

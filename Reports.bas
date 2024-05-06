@@ -193,6 +193,10 @@ If Not IsEmpty(deckArr) Then
     End If
 End If
 
+With Worksheets("Items on Deck")
+    .PivotTables("ItemsOnDeck").RefreshTable
+End With
+
 End Sub
 
 

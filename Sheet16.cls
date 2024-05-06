@@ -11,27 +11,28 @@ Attribute VB_Exposed = True
 'Allows for case insensitive searches
 Option Compare Text
 
-'Clicking the "Daily List" button uses method in "UserFormLogic" and other code in the form itself to trigger
-Private Sub DailyListBtn_Click()
-DisplayShipSelectForm
+'Double clicking an item in the labels box where all the stickers are displayed
+'Prints an individual label by using the index in the list where the item is located
+Private Sub LabelsBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+    PrintBoxLabels LabelsBox.ListIndex, LabelsBox.ListIndex
 End Sub
 
-'Checking "Daily" radio button
-Private Sub DailyRadio_Click()
-
+'Triggers when a radio button is clicked
+'Pass in DB where you want your list from and the button itself
+Sub HandleRadioClick(dbName As String, radio As Object)
 'Initialize
 Dim arr As Variant, check As String
 
 'Store ships from daily database sheet to a variable
-arr = GetShipsFromDB("DailyDatabase")
+arr = GetShipsFromDB(dbName)
 
 'If the variable is empty
 If IsEmpty(arr) Then
     'Alert the user
-    MsgBox "Add ships to daily"
+    MsgBox "No ships in this list"
     'Uncheck the radio button
-    DailyRadio.value = False
-    
+    radio.value = False
+
 'If theres only one item in the sheet the variable will be a string
 ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
     'Cast to a string JIC
@@ -53,50 +54,14 @@ End If
 
 End Sub
 
-'Same fuctionality as DailyRadio
-'TODO: Farm the over arching logic out to a different method called when clicked
+'Checking "Daily" radio button
+Private Sub DailyRadio_Click()
+HandleRadioClick "DailyDatabase", DailyRadio
+End Sub
+
+'Checking "Deck" radio button
 Private Sub DeckRadio_Click()
-Dim arr As Variant
-arr = GetShipsFromDB("ShipsOnDeck")
-If IsEmpty(arr) Then
-    MsgBox "Deck Clear"
-    DeckRadio.value = False
-ElseIf Application.WorksheetFunction.CountA(arr) = 1 Then
-    check = CStr(arr)
-    ShipsDrop.Clear
-    ShipsDrop.value = check
-    ShipsDrop.AddItem (check)
-Else
-    ShipsDrop.list = arr
-    ShipsDrop.Text = ShipsDrop.list(1)
-End If
-End Sub
-
-Private Sub LabelsBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
-    PrintBoxLabels LabelsBox.ListIndex, LabelsBox.ListIndex
-End Sub
-
-Private Sub MultiSkidBtn_Click()
-MultiSkid
-End Sub
-
-'Navigation
-'Brings you to Order Sheet
-Private Sub NewOrderButton_Click()
-Worksheets("Order").Activate
-End Sub
-
-Private Sub OrderAndCheckBtn_Click()
-PrintOrderAndCheck
-End Sub
-
-Private Sub PrintAllLabels_Click()
-PrintBoxLabels 0, Worksheets("Home").LabelsBox.ListCount - 1
-PrintRollLabel ShipsDrop.Text
-End Sub
-
-Private Sub PrintSkidLabelBtn_Click()
-PrintSkidLabel ShipsDrop.Text
+HandleRadioClick "ShipsOnDeck", DeckRadio
 End Sub
 
 'Sub to handle bringing up reports on each ship
@@ -129,17 +94,66 @@ End If
 
 End Sub
 
+'Prints every label present in the labels box
+Private Sub PrintAllLabels_Click()
+
+'Use 0 index to get all items in the box
+PrintBoxLabels 0, Worksheets("Home").LabelsBox.ListCount - 1
+
+'Print a little label to mark the rolled up labels
+'Using the name present in the dropdown box
+PrintRollLabel ShipsDrop.Text
+End Sub
+
+'Print big labels to mark the wrapped pallets
+Private Sub PrintSkidLabelBtn_Click()
+PrintSkidLabel ShipsDrop.Text
+End Sub
+
+'Print out order sheets for ship displayed in dropdown
+Private Sub OrderAndCheckBtn_Click()
+PrintOrderAndCheck
+End Sub
+
+'Prints helper labels for orders with more than one pallet
+Private Sub MultiSkidBtn_Click()
+MultiSkid
+End Sub
+
+'Clicking the "Daily List" button uses method in "UserFormLogic" and other code in the form itself to trigger
+Private Sub DailyListBtn_Click()
+DisplayShipSelectForm
+End Sub
+
+'Navigation
+'Brings you to Order Sheet
+Private Sub NewOrderButton_Click()
+Worksheets("Order").Activate
+End Sub
+
 'Used in conjuction with ShowFoundItems to create a dynamic filtering list of items in daily sheet
 'Re-filters with every key stroke
 Private Sub ItemSearchBar_Change()
 ShowFoundItems ItemSearchBar.Text, ItemSearchBar2.Text
 End Sub
+'Key Code 9 is "tab"
+'Tab key bouncing between search bars
+Private Sub ItemSearchBar_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+If KeyCode = 9 Then ItemSearchBar2.Activate
+End Sub
 
+'Used in conjuction with ShowFoundItems to create a dynamic filtering list of items in daily sheet
+'Re-filters with every key stroke
 Private Sub ItemSearchBar2_Change()
 ShowFoundItems ItemSearchBar.Text, ItemSearchBar2.Text
 End Sub
+'Key Code 9 is "tab"
+'Tab key bouncing between search bars
+Private Sub ItemSearchBar2_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shift As Integer)
+If KeyCode = 9 Then ItemSearchBar.Activate
+End Sub
 
-'Displays results of what is in the search bar
+'Displays results of what is in the search bars
 Sub ShowFoundItems(LeftSearchTerm As String, RightSearchTerm As String)
 
 'Initialize
