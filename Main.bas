@@ -33,18 +33,24 @@ WriteLists
 
 
 End Sub
+
+'Button to paste order that is copied from google sheets
 Sub PasteSpeacial()
 
+'Try
 On Error Resume Next
+    'Clear the sheet
     Worksheets("Order").Range("A1:C200").ClearContents
+    'Select to left cell
     Worksheets("Order").Range("A1").Select
+    'Paste
     Worksheets("Order").PasteSpecial Format:="HTML", Link:=False, DisplayAsIcon:=False, NoHTMLFormatting:=True
     
+'Catch
+'If nothing is copied alert the user
 If Err.Number <> 0 Then
     MsgBox ("Nothing copied. Copy something, will ya!")
 End If
-
-
 
 End Sub
 

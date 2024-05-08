@@ -41,6 +41,8 @@ For i = 0 To UBound(arr)
     End If
 Next i
 
+WriteLabel "", "", "", targetCell, rowCounter
+
 End Sub
 
 Sub ProcessBagRadish(Quantity As Double, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long)
@@ -84,12 +86,12 @@ Sub ProcessPound(Quantity As Double, packaging As String, item As String, target
 End Sub
 
 Sub WriteLabel(Quantity As Variant, packaging As String, item As String, targetCell As Object, ByRef rowCounter As Long)
-    ' Write label information to the target cell and increment the row counter
+    ' Write label information to the list box and increment the row counter
     targetCell.AddItem
     targetCell.list(rowCounter, 0) = Quantity
     targetCell.list(rowCounter, 1) = packaging
     targetCell.list(rowCounter, 2) = item
-    targetCell.Height = 326.25
+    targetCell.Height = 555
     rowCounter = rowCounter + 1
 End Sub
 

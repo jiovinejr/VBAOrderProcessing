@@ -91,6 +91,7 @@ CreateCheckSheet arr
 
 End Sub
 
+'TEST
 'Sub to check subs in this Mod
 Sub CheckReportTest()
 Dim orderArr() As OrderRecord
@@ -175,7 +176,7 @@ If Not IsEmpty(dailyArr) Then
 End If
 
 'Do the same thing with the ships on deck
-'Should farm this logic out to separate methods
+'TODO: Should farm this logic out to separate methods
 deckArr = GetShipsFromDB("ShipsOnDeck")
 deckType = VarType(deckArr)
 

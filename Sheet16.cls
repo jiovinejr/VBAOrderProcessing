@@ -11,6 +11,16 @@ Attribute VB_Exposed = True
 'Allows for case insensitive searches
 Option Compare Text
 
+'Navigation
+Private Sub HomeToIODBtn_Click()
+Worksheets("Items on Deck").Activate
+End Sub
+
+'Navigation
+Private Sub HomeToNeedsBtn_Click()
+Worksheets("Needs").Activate
+End Sub
+
 'Double clicking an item in the labels box where all the stickers are displayed
 'Prints an individual label by using the index in the list where the item is located
 Private Sub LabelsBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
@@ -56,12 +66,44 @@ End Sub
 
 'Checking "Daily" radio button
 Private Sub DailyRadio_Click()
+MoveBackToDeckBtn.Visible = True
 HandleRadioClick "DailyDatabase", DailyRadio
 End Sub
 
 'Checking "Deck" radio button
 Private Sub DeckRadio_Click()
+MoveBackToDeckBtn.Visible = False
 HandleRadioClick "ShipsOnDeck", DeckRadio
+End Sub
+
+'Button to move something in daily back to on deck
+'Either user error or cancelation
+Private Sub MoveBackToDeckBtn_Click()
+
+'Initialize and save the name in the dropdown
+Dim shipName As String
+shipName = ShipsDrop.Text
+
+'Remove from Daily
+DeleteFromDailyDB shipName
+
+'Add to On Deck
+PostToDeckDB shipName
+
+'Write data to respective sheets from user selection
+WriteLists
+
+'Tally up items needed
+CreateNeedsSheet
+
+'Sort The Deck
+SortRange
+
+'Alert the user
+MsgBox shipName & " has been put back on deck"
+
+'Show deck to reload daily
+DeckRadio.value = True
 End Sub
 
 'Sub to handle bringing up reports on each ship
@@ -98,7 +140,7 @@ End Sub
 Private Sub PrintAllLabels_Click()
 
 'Use 0 index to get all items in the box
-PrintBoxLabels 0, Worksheets("Home").LabelsBox.ListCount - 1
+PrintBoxLabels 0, Worksheets("Home").LabelsBox.ListCount - 2
 
 'Print a little label to mark the rolled up labels
 'Using the name present in the dropdown box
@@ -123,6 +165,7 @@ End Sub
 'Clicking the "Daily List" button uses method in "UserFormLogic" and other code in the form itself to trigger
 Private Sub DailyListBtn_Click()
 DisplayShipSelectForm
+Worksheets("Needs").Activate
 End Sub
 
 'Navigation

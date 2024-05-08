@@ -117,6 +117,7 @@ ship = "MV FLORETGRACHT-329085"
 CreateRecordFromDB ship
 End Sub
 
+'TEST
 'Quick sub to check the array functions in this Module
 Sub PrintOrder()
 Dim orderArr() As OrderRecord, sortedArr() As OrderRecord, arr() As OrderRecord

@@ -121,6 +121,7 @@ Set db = Worksheets(sheetName)
 offsetAmount = db.Range("A" & Rows.Count).End(xlUp).Row
 Set targetCell = db.Range("A1")
 
+'If target is empty it is the first row so dont offset
 If targetCell.Text = "" Then
     offsetAmount = 0
 End If
@@ -137,7 +138,7 @@ End Sub
 'Sends a ship name to Daily
 Sub PostToDailyDB(shipName As String)
 PostShipName shipName, "DailyDatabase"
-'SortRange
+SortRange
 End Sub
 
 
@@ -197,7 +198,6 @@ shipRow = allShipsRange.Find(shipName).Row
 allShipsRange.Rows(shipRow).EntireRow.Delete
 
 End If
-
 End Sub
 
 'Deletes a shipName from On Deck
@@ -248,7 +248,6 @@ Set allShipsRange = db.Range("A1:A" & lastRow)
 
 'Return the values in that range as an array
 GetShipsFromDB = allShipsRange.value
-
 
 End Function
 

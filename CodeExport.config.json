@@ -2,9 +2,6 @@
 	"Module Paths": {
 		"OrderRecord": "OrderRecord.cls",
 		"Reports": "Reports.bas",
-		"OLDModule1": "OLDModule1.bas",
-		"OLDModule2": "OLDModule2.bas",
-		"OLDModule3": "OLDModule3.bas",
 		"ReadDataFile": "ReadDataFile.bas",
 		"Database": "Database.bas",
 		"AddToMasterForm": "AddToMasterForm.frm",
@@ -16,7 +13,8 @@
 		"Breakdown": "Breakdown.bas",
 		"Printing": "Printing.bas",
 		"Sheet6": "Sheet6.cls",
-		"Sheet2": "Sheet2.cls"
+		"Sheet2": "Sheet2.cls",
+		"Sheet4": "Sheet4.cls"
 	},
 	"References": [
 		{
